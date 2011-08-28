@@ -1,5 +1,2 @@
-require "architect4r/version"
-
-module Architect4r
-  # Your code goes here...
-end
+require 'architect4r/version'
+require 'architect4r/base'
