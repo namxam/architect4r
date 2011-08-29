@@ -6,18 +6,24 @@ require 'architect4r/version'
 #
 # Extensions
 #
-require 'architect4r/extensions/object'
+require 'active_model'
+require 'active_support'
+require 'active_support/core_ext'
+#require 'architect4r/extensions/object'
 
 #
 # Basic server interaction
 #
 require 'architect4r/server'
-require 'architect4r/node'
 
 #
 # Model features
 #
-# none so far
+require 'architect4r/model/connection'
+require 'architect4r/model/properties'
+require 'architect4r/model/persistency'
+require 'architect4r/model/queries'
+require 'architect4r/model/node'
 
 
 #

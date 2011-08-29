@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "growl"
   
   # Production dependencies
+  s.add_runtime_dependency "activemodel"
   s.add_runtime_dependency "active_support"
   s.add_runtime_dependency "json"
   s.add_runtime_dependency "typhoeus"
