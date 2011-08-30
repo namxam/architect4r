@@ -1,0 +1,22 @@
+development:
+  host: localhost
+  port: 7474
+  log_level: DEBUG
+
+test:
+  host: localhost
+  port: 7474
+  log_level: OFF
+
+staging:
+  host: staging.dev
+  port: 8080
+  path: my_neo_instance
+  log_level: WARNING
+
+production:
+  host: localhost
+  port: 8080
+  path: my_neo_instance
+  log_level: WARNING
+  

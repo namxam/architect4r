@@ -14,8 +14,9 @@ require 'active_support/core_ext'
 #
 # Core modules
 #
-require 'architect4r/core/node_methods'
+require 'architect4r/core/configuration'
 require 'architect4r/core/cypher_methods'
+require 'architect4r/core/node_methods'
 
 #
 # Basic server interaction

@@ -1,8 +1,9 @@
+
 require 'spec_helper'
 
 describe Architect4r::Server do
   
-  subject { Architect4r::Server.new }
+  subject { TEST_SERVER }
   
   describe 'required rest methods' do
     it { should respond_to(:get) }
@@ -10,6 +11,8 @@ describe Architect4r::Server do
     it { should respond_to(:put) }
     it { should respond_to(:delete) }
   end
+  
+  its(:configuration) { should be_a(Architect4r::Core::Configuration) }
   
   describe :get do
     

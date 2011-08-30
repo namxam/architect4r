@@ -53,7 +53,6 @@ Next Steps
 
 _Version 0.1_
 
-* Add server configuration
 * Add basic authentication
 * Add digest authentication
 

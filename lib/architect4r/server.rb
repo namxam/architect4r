@@ -10,6 +10,14 @@ module Architect4r
     include Architect4r::Core::CypherMethods
     include Architect4r::Core::NodeMethods
     
+    def initialize(config=nil)
+      @server_config = config
+    end
+    
+    def configuration
+      @configuration ||= Core::Configuration.new(@server_config)
+    end
+    
     # Basic rest actions
     
     def get(url, options = {})
@@ -38,7 +46,7 @@ module Architect4r
       if url[0,4] == "http"
         url
       else
-        "http://" + 'localhost' + ':' + '7475' + '' + "/db/data" + url
+        "http://#{configuration.host}:#{configuration.port}#{configuration.path}/db/data#{url}"
       end
     end
     
