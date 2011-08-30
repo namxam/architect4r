@@ -8,7 +8,7 @@ for the REST API.
 Requirements
 ------------
 
-_None so far ;)_
+You need a running neo4j installation.
 
 Installation
 ------------
@@ -47,6 +47,60 @@ Quick Start
     Instrument.find_by_name("Piano")
     Instrument.find_by_name("Klavier", :de)
     Instrument.find_by_cypher("start cat=(123) match (cat)--(x) return x limit 2")
+
+Next Steps
+----------
+
+_Version 0.1_
+
+* Add server configuration
+* Add basic authentication
+* Add digest authentication
+
+_Version 0.2_
+
+* Add property localization
+* Add validations to nodes
+
+_Version 0.3_
+
+* Add indexes
+
+_Version 0.4_
+
+* Add relationships
+
+_Version 0.5_
+
+* Add more node finders by using indexes
+
+_Version 0.6_
+
+* Create a ORM (ActiveRecord) synced node
+
+_Version 0.7_
+
+* Give the cypher plugin some more love
+* Add more default queries
+
+_Version 0.8_
+
+* Rake tasks for installing neo4j
+* Rake tasks for test setup
+
+_Version 0.9_
+
+* Make it compatible to paperclip and carrierwave
+* Make it compatible to sunspot search
+
+_Version 1.0_
+
+* Improve test case
+* Optimize, optimize, optimize
+
+_sometime in the future_
+
+* Allow batch execution by facilitating hydra's concurrency model
 
 License
 -------
