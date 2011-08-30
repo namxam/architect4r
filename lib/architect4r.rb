@@ -12,6 +12,12 @@ require 'active_support/core_ext'
 #require 'architect4r/extensions/object'
 
 #
+# Core modules
+#
+require 'architect4r/core/node_methods'
+require 'architect4r/core/cypher_methods'
+
+#
 # Basic server interaction
 #
 require 'architect4r/server'
