@@ -48,13 +48,8 @@ Quick Start
     Instrument.find_by_name("Klavier", :de)
     Instrument.find_by_cypher("start cat=(123) match (cat)--(x) return x limit 2")
 
-Next Steps
-----------
-
-_Version 0.1_
-
-* Add basic authentication
-* Add digest authentication
+Roadmap / Next Steps
+--------------------
 
 _Version 0.2_
 
@@ -63,11 +58,13 @@ _Version 0.2_
 
 _Version 0.3_
 
-* Add indexes
+* Add relationships
 
 _Version 0.4_
 
-* Add relationships
+* Add node indexes
+* Add relationship indexes
+* Add auto indexing of class related nodes (not neo4j auto indexing)
 
 _Version 0.5_
 
@@ -91,6 +88,8 @@ _Version 0.9_
 
 * Make it compatible to paperclip and carrierwave
 * Make it compatible to sunspot search
+* Add basic authentication
+* Add digest authentication
 
 _Version 1.0_
 
