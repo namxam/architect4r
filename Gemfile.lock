@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    architect4r (0.0.1a)
+    architect4r (0.0.1)
       active_support
       activemodel
       json
