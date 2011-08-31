@@ -46,3 +46,17 @@ class LocalizedNodeWithProperties < Architect4r::Model::Node
   # Property with no default localization
   property :description, :cast_to => String, :localize => true
 end
+
+class LocalizedNodeWithValidations < Architect4r::Model::Node
+  use_server TEST_SERVER
+  
+  # Properties
+  property :title, :cast_to => String, :localize => :en
+  property :description, :cast_to => String, :localize => true
+  property :users_counter, :cast_to => Integer
+  
+  # Validations
+  validates_presence_of :title#, :presence => true
+  validates :description, :length => { :minimum => 3, :allow_null => true }
+  validates :users_counter, :numericality => true
+end

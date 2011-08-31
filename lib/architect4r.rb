@@ -30,6 +30,7 @@ require 'architect4r/model/connection'
 require 'architect4r/model/properties'
 require 'architect4r/model/persistency'
 require 'architect4r/model/queries'
+require 'architect4r/model/validations'
 require 'architect4r/model/node'
 
 
