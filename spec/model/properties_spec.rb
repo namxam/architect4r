@@ -97,4 +97,70 @@ describe "Model properties based on test class TestNodeWithCastedProperties" do
     
   end
   
+  describe "store in different localizations" do
+    
+    subject { LocalizedNodeWithProperties.new }
+    
+    it "should provide a list of available locales"
+    
+    it "should allow specifying a default locale"
+    
+    it "should return the localized version based on the I18n locale" do
+      subject.write_attribute(:title, "Hello there", :en)
+      subject.write_attribute(:title, "Hallo du da", :de)
+      
+      I18n.locale = :en
+      subject.title.should == "Hello there"
+      
+      I18n.locale = :de
+      subject.title.should == "Hallo du da"
+    end
+    
+    it "should fall back to the default value if no other is present" do
+      subject.write_attribute(:title, "Hello there", :en)
+      # do not set a german title
+      
+      I18n.locale = :de
+      subject.title.should == "Hello there"
+    end
+    
+    it "should not fall back to another localized value if not wanted" do
+      subject.write_attribute(:description, "This is my description", :en)
+      # do not set a german description
+      
+      I18n.locale = :de
+      subject.description.should be_nil
+      I18n.locale = :en
+      subject.description.should == "This is my description"
+    end
+    
+    it "should allow to force the returned locale" do
+      subject.write_attribute(:title, "Hello there", :en)
+      subject.write_attribute(:title, "Hallo du da", :de)
+      
+      subject.read_attribute(:title, :en).should == "Hello there"
+      subject.read_attribute(:title, :de).should == "Hallo du da"
+    end
+    
+    it "should set the localized version based on the I18n locale" do
+      I18n.locale = :en
+      subject.title = "Hello there"
+      
+      I18n.locale = :de
+      subject.title = "Hallo du da"
+      
+      subject.read_attribute('title_en').should == "Hello there"
+      subject.read_attribute('title_de').should == "Hallo du da"
+    end
+    
+    it "should allow to force the locale in the setter" do
+      subject.write_attribute(:title, "Hello there", :en)
+      subject.write_attribute(:title, "Hallo du da", :de)
+      
+      subject.read_attribute('title_en').should == "Hello there"
+      subject.read_attribute('title_de').should == "Hallo du da"
+    end
+    
+  end
+  
 end

@@ -30,15 +30,19 @@ module Architect4r
       #
       # ==== Returns
       # Object:: the casted attibutes value.
-      def read_attribute(property)
+      def read_attribute(property, locale = nil)
+        property = "#{property}_#{locale}" if locale
         @properties_data[property.to_s]
       end
       
       # Store a casted value in the current instance of an attribute defined
       # with a property and update dirty status
-      def write_attribute(property, value)
+      def write_attribute(property, value, locale = nil)
         # retrieve options for the attribute
         opts = self.class.properties[property.to_s]
+        
+        # Check if we should store a localized version of the data
+        property = "#{property}_#{locale}" if locale
         
         # TODO: Mark dirty attribute tracking
         
@@ -53,7 +57,7 @@ module Architect4r
           value.to_i
         elsif cast_to == Float
           value.to_f
-        elsif cast_to == TrueClass
+        elsif cast_to == TrueClass or cast_to == FalseClass
           if value.kind_of?(Integer)
             value == 1
           else
@@ -112,7 +116,22 @@ module Architect4r
         # defines the getter for the property (and optional aliases)
         def create_property_getter(name)
           define_method(name) do
-            read_attribute(name)
+            # Get property configuration
+            localize = self.class.properties[name.to_s][:localize]
+            
+            # Determine current locale
+            locale = localize ? I18n.locale : nil
+            
+            # Fetch property value
+            result = read_attribute(name, locale)
+            
+            # If there is a fallback locale, fetch its value if appropriate
+            if result.nil? && localize && localize != true && localize.to_s != locale.to_s
+              result = read_attribute(name, localize)
+            end
+            
+            # Finally return some data
+            result
           end
           
           opts = self.properties[name.to_s]
@@ -128,7 +147,8 @@ module Architect4r
         # defines the setter for the property (and optional aliases)
         def create_property_setter(name)
           define_method("#{name}=") do |value|
-            write_attribute(name, value)
+            locale = self.class.properties[name.to_s][:localize] ? I18n.locale : nil
+            write_attribute(name, value, locale)
           end
         end
         

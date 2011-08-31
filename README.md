@@ -22,6 +22,8 @@ Quick Start
 
     # Class definition
     class Instrument < Architect4r::Model
+      property :name, :cast_to => String, :localize => true
+      property :name, :cast_to => String, :localize => :de
     end
     
     # Interfacing with the I18n class
@@ -53,7 +55,6 @@ Roadmap / Next Steps
 
 _Version 0.2_
 
-* Add property localization
 * Add validations to nodes
 
 _Version 0.3_
