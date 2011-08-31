@@ -56,12 +56,13 @@ Roadmap / Next Steps
 _Version 0.3_
 
 * Add relationships
+* Auto add class related nodes to a class root node for easy queries
 
 _Version 0.4_
 
 * Add node indexes
 * Add relationship indexes
-* Add auto indexing of class related nodes (not neo4j auto indexing)
+* Add auto indexing of node properties / nodes (not neo4j auto indexing)
 
 _Version 0.5_
 
