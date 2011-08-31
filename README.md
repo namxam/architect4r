@@ -53,10 +53,6 @@ Quick Start
 Roadmap / Next Steps
 --------------------
 
-_Version 0.2_
-
-* Add validations to nodes
-
 _Version 0.3_
 
 * Add relationships
