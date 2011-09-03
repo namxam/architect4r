@@ -11,12 +11,15 @@ Gem::Specification.new do |s|
   s.summary     = %q{A gem for working with the neo4j REST interface.}
   s.description = %q{This gem is intended for making a neo4j graph db accessible by providing a ruby wrapper for the REST API.}
   
-  s.rubyforge_project = "architect4r"
-  
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+  
+  # Production dependencies
+  s.add_runtime_dependency %q<activemodel>, "~> 3.0"
+  s.add_runtime_dependency %q<json>, "~> 1.5"
+  s.add_runtime_dependency %q<typhoeus>, "~> 0.2"
   
   # Development dependencies
   s.add_development_dependency "rspec"
@@ -24,10 +27,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "rb-fsevent"
   s.add_development_dependency "growl"
-  
-  # Production dependencies
-  s.add_runtime_dependency "activemodel"
-  s.add_runtime_dependency "active_support"
-  s.add_runtime_dependency "json"
-  s.add_runtime_dependency "typhoeus"
 end
