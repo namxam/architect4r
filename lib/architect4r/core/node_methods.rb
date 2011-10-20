@@ -42,7 +42,7 @@ module Architect4r
 
         def update_node(id, properties)
           # Handle urls
-          url = id.to_i == 0 ? id : prepend_base_url("/node/#{id.to_i}")
+          url = id.to_i == 0 ? id : node_url(id)
 
           # Append the properties
           url += "/properties"
@@ -57,7 +57,7 @@ module Architect4r
           # TODO: Delete all relationships
           
           # Delete node itself
-          url = id.to_i == 0 ? id : prepend_base_url("/node/#{id.to_i}")
+          url = id.to_i == 0 ? id : node_url(id)
           response = Typhoeus::Request.delete(url, :headers => { 'Accept' => 'application/json' })
           response.code == 204 ? true : false
         end

@@ -52,7 +52,9 @@ module Architect4r
     end
     
     def node_url(url_or_id)
-      if url_or_id.to_s != '0' and url_or_id.to_i == 0
+      if url_or_id.is_a?(Hash)
+        url_or_id['self'].to_s
+      elsif url_or_id.to_s != '0' and url_or_id.to_i == 0
         url_or_id.to_s
       else
         prepend_base_url("/node/#{url_or_id.to_i}")
