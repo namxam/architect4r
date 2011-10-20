@@ -14,10 +14,11 @@ describe "Node Queries" do
       record.id.should == 2
     end
     
-    #it "should not instatiate the node if it is of the wrong type" do
-    #  record = LocalizedNodeWithProperties.find_by_id(2)
-    #  record.should be_nil
-    #end
+    it "should not instatiate the node if it is of the wrong type" do
+      pending
+      #record = LocalizedNodeWithProperties.find_by_id(2)
+      #record.should be_nil
+    end
     
   end
   
