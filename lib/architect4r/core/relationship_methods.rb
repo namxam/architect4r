@@ -5,7 +5,7 @@ module Architect4r
       
       module InstanceMethods
         
-        def create_relationship(start_node, end_node, type, properties)
+        def create_relationship(start_node, end_node, type, properties={})
           # POST http://localhost:7474/db/data/node/3/relationships
           # {"to" : "http://localhost:7474/db/data/node/4", "type" : "LOVES"}
           # 201: Created
@@ -49,7 +49,7 @@ module Architect4r
           types = types.map { |e| URI.escape(e) }.join('&')
           
           # Send request
-          url = prepend_base_url("/node/#{node.to_i}/relationships/#{direction}/#{types}")
+          url = node_url(node) + "/relationships/#{direction}/#{types}"
           response = Typhoeus::Request.get(url, :headers => { 'Accept' => 'application/json' })
           response.code == 200 ? JSON.parse(response.body) : nil
         end
