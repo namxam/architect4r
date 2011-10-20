@@ -1,4 +1,3 @@
-
 require 'spec_helper'
 
 describe Architect4r::Server do
@@ -31,46 +30,6 @@ describe Architect4r::Server do
     
   end
   
-  it "should create a node" do
-    result = subject.create_node({ 'name' => 'My test node', 'friends' => 13 })
-    result.should be_a(Hash)
-    result['self'].should be_a(String)
-  end
-  
-  it "should get a node" do
-    result = subject.get_node(1)
-    result.should be_a(Hash)
-    result['self'].should be_a(String)
-  end
-  
-  it "should delete a node" do
-    # Create a node which can be deleted
-    node = subject.create_node({ 'test' => 'test' })
-    node.should be_a(Hash)
-    
-    # Delete the node
-    subject.delete_node(node['self'])
-    
-    # Check if it still exists
-    subject.get_node(node['self']).should be_nil
-  end
-  
-  it "should update a nodes properties" do
-    # Create a node which can be deleted
-    original_node = subject.create_node({ 'test1' => 'test', 'test2' => 'hello' })
-    original_node.should be_a(Hash)
-    
-    # Update some attributes
-    result = subject.update_node(original_node['self'], { 'test1' => 'world', 'test3' => 'word'})
-    result.should be_true
-    
-    # check result
-    changed_node = subject.get_node(original_node['self'])
-    changed_node['data']['test1'].should == 'world'
-    changed_node['data'].has_key?('test2').should be_false
-    changed_node['data']['test3'].should == 'word'
-  end
-  
   describe :execute_cypher do
     
     it "should return an array of nodes" do
@@ -86,8 +45,23 @@ describe Architect4r::Server do
     end
     
     it "should the data unprocessed" do
-      results = subject.execute_cypher("start node = (0) return node,node.name?")
-      results.should_not be_empty
+      #results = subject.execute_cypher("start node = (0) return node,node.name?")
+      #results.should_not be_empty
+      pending
+    end
+    
+  end
+  
+  describe "relationship methods" do
+    
+    it "should retrieve all relationships" do
+      subject.get_node_relationships(0).should be_a(Array)
+    end
+    
+    it "should create a new relationship" do
+      result = subject.create_relationship(0, 1, 'category', {'age' => '10', 'name' => 'mike'})
+      result.should be_a(Hash)
+      subject.delete_relationship(result['self'])
     end
     
   end

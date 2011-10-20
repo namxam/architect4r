@@ -22,8 +22,12 @@ Quick Start
 
     # Class definition
     class Instrument < Architect4r::Model
+      # Properties
       property :name, :cast_to => String, :localize => true
       property :name, :cast_to => String, :localize => :de
+      
+      # Validations
+      validates :name, :presence => true
     end
     
     # Interfacing with the I18n class
@@ -36,9 +40,42 @@ Quick Start
     instrument.valid?
     instrument.save
     
-    # Create associations between objects
-    instrument.link_to(:category, @category_node)
-    instrument.link_by(:musician, @musician_node)
+    # Associations between objects
+    instrument.links.outgoing
+    instrument.links.incoming
+    instrument.links.both
+    
+    # Filter associations by relationship type (incoming, outcoming, both)
+    instrument.links.outgoing(:category, :fan)
+    
+    
+    class Fanship < Architect4r::Model::Relationship
+      # All relationships need a unique descriptor
+      descriptor 'fanship' # if not set it is derived from the class name
+      
+      # Properties
+      property :created_at, :cast_to => DateTime
+      property :reason, :cast_to => String
+    end
+    
+    # Init a class based relationship
+    Fanship.new( :start_node => @user,
+                 :end_node => @instrument,
+                 :created_at => DateTime.new, 
+                 :reason => 'Because I like you')
+    
+    # Query by type
+    @user.links.outgoing(Fanship)
+    
+    
+    
+    # Create a complex relationships
+    relationship = instrument.links.incoming.new
+    relationship.save
+    # or
+    instrument.links.incoming.create(:category, @other_node, { :created_at => DateTime.new, :active => true })
+    instrument.links.incoming.create(CategoryRelation, @other_node, { :created_at => DateTime.new, :active => true })
+    
     
     # Updating attributes
     instrument.update_attributes(params[:instrument])

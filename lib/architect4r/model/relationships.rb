@@ -1,23 +1,16 @@
 module Architect4r
   module Model
-    module Persistency
+    module Relationships
       extend ActiveSupport::Concern
-      
-      included do
-        
-      end
       
       module InstanceMethods
         
-        
+        def links
+          @links_query_interface = LinksQueryInterface.new(self)
+        end
         
       end
       
-      module ClassMethods
-        
-        
-        
-      end
     end
   end
 end

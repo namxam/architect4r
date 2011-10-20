@@ -100,6 +100,7 @@ describe "Persistency extension" do
     it "should be false if the record is created" do
       subject.create
       subject.new?.should be_false
+      subject.destroy
     end
     
   end

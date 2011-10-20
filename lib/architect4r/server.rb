@@ -9,6 +9,7 @@ module Architect4r
     
     include Architect4r::Core::CypherMethods
     include Architect4r::Core::NodeMethods
+    include Architect4r::Core::RelationshipMethods
     
     def initialize(config=nil)
       @server_config = config
@@ -50,11 +51,28 @@ module Architect4r
       end
     end
     
+    def node_url(url_or_id)
+      if url_or_id.to_s != '0' and url_or_id.to_i == 0
+        url_or_id.to_s
+      else
+        prepend_base_url("/node/#{url_or_id.to_i}")
+      end
+    end
+    
+    def relationship_url(url_or_id)
+      if url_or_id.to_s != '0' and url_or_id.to_i == 0
+        url_or_id.to_s
+      else
+        prepend_base_url("/relationship/#{url_or_id.to_i}")
+      end
+    end
+    
     def convert_if_possible(data)
       data
     end
     
   end
+  
   
 end
 

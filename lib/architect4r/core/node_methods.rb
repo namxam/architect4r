@@ -10,7 +10,7 @@ module Architect4r
           response = Typhoeus::Request.post(prepend_base_url('/node'), 
             :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
             :body => properties.to_json)
-
+          
           # Evaluate response
           response.code == 201 ? JSON.parse(response.body) : nil
         end
@@ -35,9 +35,8 @@ module Architect4r
           # outgoing_relationships: http://localhost:7475/db/data/node/0/relationships/out
           
           # Handle cases where id might be a url
-          url = id.to_i == 0 ? id : prepend_base_url("/node/#{id.to_i}")
           
-          response = Typhoeus::Request.get(url, :headers => { 'Accept' => 'application/json' })
+          response = Typhoeus::Request.get(node_url(id), :headers => { 'Accept' => 'application/json' })
           response.code == 200 ? JSON.parse(response.body) : nil
         end
 
@@ -53,10 +52,10 @@ module Architect4r
             :body => properties.to_json)
           response.code == 204 ? true : false
         end
-
+        
         def delete_node(id)
           # TODO: Delete all relationships
-
+          
           # Delete node itself
           url = id.to_i == 0 ? id : prepend_base_url("/node/#{id.to_i}")
           response = Typhoeus::Request.delete(url, :headers => { 'Accept' => 'application/json' })

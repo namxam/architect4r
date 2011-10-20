@@ -5,7 +5,7 @@ development:
 
 test:
   host: localhost
-  port: 7474
+  port: 7475
   log_level: OFF
 
 staging:
@@ -19,4 +19,3 @@ production:
   port: 8080
   path: my_neo_instance
   log_level: WARNING
-  

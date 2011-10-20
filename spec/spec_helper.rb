@@ -1,5 +1,7 @@
 require 'rspec'
+require 'rake'
 require 'architect4r'
+require 'architect4r/instance_manager'
 
 unless defined?(TEST_SERVER)
   TEST_SERVER_CONFIG = {
@@ -20,12 +22,16 @@ RSpec.configure do |config|
   #config.formatter     = 'documentation'
   #c.filter_run_excluding :slow => true
   
+  neo_manager = Architect4r::InstanceManager.new(File.join(File.dirname(__FILE__), '../neo4j_server'))
+  
   config.before(:suite) do
-    # prepare database
+    neo_manager.reset_to_sample_data(File.join(File.dirname(__FILE__), "fixtures/graph.db.default/"))
+    
+    #subject.create_node({ 'name' => 'My test node', 'friends' => 13 })
   end
   
   config.after(:suite) do
-    # cleanup database
+    neo_manager.start
   end
 end
 
@@ -59,4 +65,12 @@ class LocalizedNodeWithValidations < Architect4r::Model::Node
   validates_presence_of :title#, :presence => true
   validates :description, :length => { :minimum => 3, :allow_null => true }
   validates :users_counter, :numericality => true
+end
+
+class Fanship < Architect4r::Model::Node
+  use_server TEST_SERVER
+  
+  # Properties
+  property :created_at, :cast_to => DateTime
+  property :reason, :cast_to => String
 end

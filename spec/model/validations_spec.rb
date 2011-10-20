@@ -9,7 +9,7 @@ describe "Validations extension" do
   [:title, :description, :users_counter].each do |a|
     it "should list #{a} among its errors" do
       subject.valid?
-      subject.errors.has_key?(a).should be_true
+      subject.errors.to_hash.has_key?(a).should be_true
     end
   end
   
