@@ -54,11 +54,13 @@ module Architect4r
         end
         
         def delete_node(id)
-          # TODO: Delete all relationships
+          # Delete all relationships
+          get_node_relationships(id, :all).each do |rel|
+            delete_relationship(rel)
+          end
           
           # Delete node itself
-          url = id.to_i == 0 ? id : node_url(id)
-          response = Typhoeus::Request.delete(url, :headers => { 'Accept' => 'application/json' })
+          response = Typhoeus::Request.delete(node_url(id), :headers => { 'Accept' => 'application/json' })
           response.code == 204 ? true : false
         end
         
