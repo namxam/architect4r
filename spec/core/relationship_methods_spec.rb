@@ -16,10 +16,10 @@ describe Architect4r::Server do
     subject.delete_node(@node2)
   end
   
-  it "should create a new relationship" do
+  it "should create and delete a new relationship" do
     result = subject.create_relationship(@node1, @node2, 'friendship', { 'reason' => 'Because I really like you!' })
     result.should be_a(Hash)
-    subject.delete_relationship(result['self'])
+    subject.delete_relationship(result)
   end
   
   it "should retrieve all relationships" do
