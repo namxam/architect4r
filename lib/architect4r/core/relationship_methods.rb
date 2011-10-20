@@ -19,8 +19,6 @@ module Architect4r
             :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
             :body => properties.to_json)
           
-          puts response.inspect
-          
           # Evaluate response
           response.code == 201 ? JSON.parse(response.body) : nil
         end

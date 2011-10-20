@@ -67,7 +67,7 @@ class LocalizedNodeWithValidations < Architect4r::Model::Node
   validates :users_counter, :numericality => true
 end
 
-class Fanship < Architect4r::Model::Node
+class Fanship < Architect4r::Model::Relationship
   use_server TEST_SERVER
   
   # Properties

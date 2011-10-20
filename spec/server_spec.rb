@@ -52,18 +52,4 @@ describe Architect4r::Server do
     
   end
   
-  describe "relationship methods" do
-    
-    it "should retrieve all relationships" do
-      subject.get_node_relationships(0).should be_a(Array)
-    end
-    
-    it "should create a new relationship" do
-      result = subject.create_relationship(0, 1, 'category', {'age' => '10', 'name' => 'mike'})
-      result.should be_a(Hash)
-      subject.delete_relationship(result['self'])
-    end
-    
-  end
-  
 end
