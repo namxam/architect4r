@@ -12,6 +12,28 @@ module Architect4r
         super
         subklass.send(:include, Architect4r::Model::Properties)
         subklass.send(:include, Architect4r::Model::Validations)
+        
+        subklass.class_exec do
+          
+          def self.model_root
+            @model_root ||= begin
+              # Check if there is already a model root,
+              query = "start root = node(0) match (root)-[r:#{model_root_relation_type}]->(x) where r.architect4r_type and r.architect4r_type = '#{name}' return x"
+              the_root = connection.execute_cypher(query).to_a.first
+              
+              # otherwise create one
+              the_root ||= begin 
+                m_root = connection.create_node(:name => "#{name} Root")
+                connection.create_relationship(0, m_root, model_root_relation_type, { 'architect4r_type' => name })
+                m_root
+              end
+              
+              # Return model root node
+              the_root
+            end
+          end
+          
+        end
       end
       
       attr_accessor :raw_data
@@ -30,6 +52,12 @@ module Architect4r
         # perform creation
         if result = connection.create_node(self._to_database_hash)
           self.raw_data = result
+          
+          # Link the node with a model root node
+          puts
+          puts "--- self: #{self.id}"
+          puts "--- model root: #{self.class.model_root.inspect}"
+          connection.create_relationship(self.id, self.class.model_root, 'model_type')
         end
         
         # if something goes wrong we receive a nil value and return false
@@ -59,6 +87,10 @@ module Architect4r
           self.freeze
         end
         result
+      end
+      
+      def self.model_root_relation_type
+        'model_root'
       end
       
     end

@@ -29,4 +29,20 @@ describe "Model Node" do
     
   end
   
+  describe "node model_root" do
+    
+    it "should create a model_root node if there is none" do
+      Person.create(:name => 'Morpheus', :human => true)
+      Person.model_root.should_not be_nil
+    end
+    
+    it "should reuse an existing model_root if there is already one" do
+      Person.create(:name => 'Morpheus', :human => true)
+      m_root = Person.model_root
+      Person.create(:name => 'Trinity', :human => true)
+      Person.model_root.should == m_root
+    end
+    
+  end
+  
 end
