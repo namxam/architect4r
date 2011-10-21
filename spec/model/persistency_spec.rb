@@ -22,22 +22,12 @@ describe "Persistency extension" do
   
   describe :update do
     
-    before(:all) do
-      @node = Person.new(:name => 'Neo', :human => true, :note => 'Important person')
-      @node.create
-    end
-    
-    after(:all) do
-      @node.destroy
-    end
-    
-    subject { @node }
+    subject { Person.create(:name => 'Neo', :human => true, :note => 'Important person') }
     
     it "should update the name" do
       subject.name = "Agent Smith"
       subject.update.should be_true
       subject.name.should == "Agent Smith"
-      
       reloaded = Person.find_by_id(subject.id)
       reloaded.name.should == "Agent Smith"
     end

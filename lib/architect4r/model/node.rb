@@ -18,7 +18,7 @@ module Architect4r
           def self.model_root
             @model_root ||= begin
               # Check if there is already a model root,
-              query = "start root = node(0) match (root)-[r:#{model_root_relation_type}]->(x) where r.architect4r_type and r.architect4r_type = '#{name}' return x"
+              query = "start root = node(0) match (root)-[r:#{  model_root_relation_type}]->(x) where r.architect4r_type and r.architect4r_type = '#{name}' return x"
               the_root = connection.execute_cypher(query).to_a.first
               
               # otherwise create one
@@ -29,7 +29,7 @@ module Architect4r
               end
               
               # Return model root node
-              the_root
+              GenericNode.send(:build_from_database, the_root)
             end
           end
           
@@ -54,7 +54,7 @@ module Architect4r
           self.raw_data = result
           
           # Link the node with a model root node
-          connection.create_relationship(self.id, self.class.model_root, 'model_type')
+          connection.create_relationship(self.id, self.class.model_root.id, 'model_type')
         end
         
         # if something goes wrong we receive a nil value and return false

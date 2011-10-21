@@ -43,7 +43,7 @@ class Person < Architect4r::Model::Node
   
   # Validations
   validates :name, :presence => true, :length => { :minimum => 3, :allow_nil => true }
-  validates :human, :presence => true
+  validates :human, :inclusion =>  { :in => [true, false] }
   validates :age_when_enlightend, :numericality => { :allow_nil => true }
   
   # Instance methods
@@ -58,11 +58,11 @@ class Ship < Architect4r::Model::Node
   # Properties
   property :name, :cast_to => String
   property :working, :cast_to => TrueClass
-  property :max_crew_size, :cast_to => Integer
+  property :crew_size, :cast_to => Integer
   
   # Validations
   validates :name, :length => { :minimum => 3 }
-  validates :max_crew_size, :numericality => true
+  validates :crew_size, :numericality => true
 end
 
 class CrewMembership < Architect4r::Model::Relationship

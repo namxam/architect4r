@@ -26,7 +26,9 @@ module Architect4r
         end
         
         def find_by_id(id)
-          self.build_from_database(connection.get_node(id))
+          data = connection.execute_cypher("start s=node(#{self.model_root.id}), d=node(#{id.to_i}) match s<-[r:model_type]-d return d")
+          data &&= data.first && data.first['d']
+          self.build_from_database(data)
         end
         
         def find_by_id!(id)

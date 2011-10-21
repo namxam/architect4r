@@ -3,7 +3,7 @@ require "spec_helper"
 describe Architect4r::Model::Relationship do
   
   let(:person) { Person.create(:name => 'Niobe', :human => true) }
-  let(:ship) { Ship.create(:name => 'Logos', :max_crew_size => 2) }
+  let(:ship) { Ship.create(:name => 'Logos', :crew_size => 2) }
   
   describe "initialization of new instances" do
     

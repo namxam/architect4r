@@ -148,6 +148,7 @@ describe "Model properties based on test class Person" do
       
       I18n.locale = :de
       subject.vita = "Hallo du da"
+      I18n.locale = :en
       
       subject.read_attribute('vita_en').should == "Hello there"
       subject.read_attribute('vita_de').should == "Hallo du da"

@@ -9,15 +9,17 @@ describe "Node Queries" do
     it { should respond_to(:find_by_id) }
     
     it "should find a node based on its id" do
-      record = subject.find_by_id(2)
+      person = Person.create(:name => 'Agent Smith', :human => false)
+      person.persisted?.should be_true
+      
+      record = Person.find_by_id(person.id)
       record.should be_a(Person)
-      record.id.should == 2
+      record.id.should == person.id
     end
     
     it "should not instatiate the node if it is of the wrong type" do
-      pending
-      #record = Person.find_by_id(2)
-      #record.should be_nil
+      ship = Ship.create(:name => 'Brahama', :crew_size => 1)
+      Person.find_by_id(ship.id).should be_nil
     end
     
   end
