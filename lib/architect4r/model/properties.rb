@@ -85,8 +85,8 @@ module Architect4r
         end
         
         def timestamps!
-          property(:updated_at, Time, :read_only => true, :protected => true, :auto_validation => false)
-          property(:created_at, Time, :read_only => true, :protected => true, :auto_validation => false)
+          property(:updated_at, :cast_to => Time)
+          property(:created_at, :cast_to => Time)
           
           set_callback :save, :before do |object|
             write_attribute('updated_at', Time.now)

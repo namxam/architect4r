@@ -20,6 +20,7 @@ module Architect4r
               # Check if there is already a model root,
               query = "start root = node(0) match (root)-[r:#{  model_root_relation_type}]->(x) where r.architect4r_type and r.architect4r_type = '#{name}' return x"
               the_root = connection.execute_cypher(query).to_a.first
+              the_root &&= the_root['x']
               
               # otherwise create one
               the_root ||= begin 

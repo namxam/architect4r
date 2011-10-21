@@ -34,4 +34,17 @@ describe "Node Queries" do
     
   end
   
+  describe "custom cypher queries" do
+    
+    it "should only return the first two records" do
+      Person.create(:name => 'Neo', :human => true)
+      Person.create(:name => 'Trinity', :human => true)
+      Person.create(:name => 'Morpheus', :human => true)
+      results = Person.find_by_cypher("start s=node(#{Person.model_root.id}) match s<-[:model_type]-d return d limit 2", 'd')
+      results.size.should == 2
+      results.first.should be_a(Person)
+    end
+    
+  end
+  
 end

@@ -9,21 +9,9 @@ module Architect4r
       
       module ClassMethods
         
-        def all(opts = {}, &block)
-          raise 'not implemented'
-        end
-        
         def count(opts = {}, &block)
           data = connection.execute_cypher("start s=node(#{self.model_root.id}) match (s)<-[:model_type]-(d) return count(d)")
           data.first['count(d)']
-        end
-        
-        def first(opts = {})
-          raise 'not implemented'
-        end
-        
-        def last(opts = {})
-          raise 'not implemented'
         end
         
         def find_by_id(id)
@@ -34,6 +22,14 @@ module Architect4r
         
         def find_by_id!(id)
           raise 'not implemented'
+        end
+        
+        def find_by_cypher(query, identifier)
+          if data = connection.execute_cypher(query)
+            data.map { |item| build_from_database(item[identifier]) }
+          else
+            nil
+          end
         end
         
       end
