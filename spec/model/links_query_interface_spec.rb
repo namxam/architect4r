@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Architect4r::Model::LinksQueryInterface do
   
-  before(:all) { @node = TestNodeWithCastedProperties.create(:name => 'A test node') }
+  before(:all) { @node = Person.create(:name => 'Neo') }
   after(:all) { @node.destroy }
   
   subject { Architect4r::Model::LinksQueryInterface.new(@node) }

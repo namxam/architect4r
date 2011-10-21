@@ -35,42 +35,49 @@ RSpec.configure do |config|
   end
 end
 
-class TestNodeWithCastedProperties < Architect4r::Model::Node
-  use_server TEST_SERVER
-  
-  property :name, :cast_to => String
-  property :age, :cast_to => Integer
-  property :active, :cast_to => TrueClass
-end
-
-class LocalizedNodeWithProperties < Architect4r::Model::Node
-  use_server TEST_SERVER
-  
-  # Property with default localization
-  property :title, :cast_to => String, :localize => :en
-  
-  # Property with no default localization
-  property :description, :cast_to => String, :localize => true
-end
-
-class LocalizedNodeWithValidations < Architect4r::Model::Node
+class Person < Architect4r::Model::Node
   use_server TEST_SERVER
   
   # Properties
-  property :title, :cast_to => String, :localize => :en
-  property :description, :cast_to => String, :localize => true
-  property :users_counter, :cast_to => Integer
+  property :name, :cast_to => String
+  property :human, :cast_to => TrueClass
+  property :vita, :cast_to => String, :localize => :en
+  property :birthday, :cast_to => Date
+  property :age_when_enlightend, :cast_to => Integer
+  property :note, :cast_to => String, :localize => true
   
   # Validations
-  validates_presence_of :title#, :presence => true
-  validates :description, :length => { :minimum => 3, :allow_null => true }
-  validates :users_counter, :numericality => true
+  validates :name, :presence => true, :length => { :minimum => 3, :allow_nil => true }
+  validates :human, :presence => true
+  validates :age_when_enlightend, :numericality => { :allow_nil => true }
+  
+  # Instance methods
+  def age
+    birthday.present && ((Date.today - birthday).to_i / 365)
+  end
 end
 
-class Fanship < Architect4r::Model::Relationship
+class Ship < Architect4r::Model::Node
   use_server TEST_SERVER
   
   # Properties
-  property :created_at, :cast_to => DateTime
-  property :reason, :cast_to => String
+  property :name, :cast_to => String
+  property :working, :cast_to => TrueClass
+  property :max_crew_size, :cast_to => Integer
+  
+  # Validations
+  validates :name, :length => { :minimum => 3 }
+  validates :max_crew_size, :numericality => true
+end
+
+class CrewMembership < Architect4r::Model::Relationship
+  use_server TEST_SERVER
+  
+  # Properties
+  property :member_since, :cast_to => DateTime
+  property :rank, :cast_to => String
+  
+  # Type enforcements
+  #source :type => Ship
+  #destination :type => Person
 end

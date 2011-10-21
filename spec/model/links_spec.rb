@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "links to and from nodes" do
   
-  before(:all) { @node = TestNodeWithCastedProperties.create(:name => 'A test node') }
+  before(:all) { @node = Person.create(:name => 'Neo') }
   after(:all) { @node.destroy }
   
   it "should respond to :links" do

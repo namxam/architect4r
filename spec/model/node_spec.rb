@@ -2,22 +2,22 @@ require "spec_helper"
 
 describe "Model Node" do
   
-  subject { TestNodeWithCastedProperties }
+  subject { Person }
   
   describe :new do
     
     it { should respond_to(:new) }
     
     it "should accept a hash of properties with strings as keys" do
-      piano = subject.new({ 'name' => 'Piano' })
+      piano = subject.new({ 'name' => 'Neo' })
       piano.should respond_to(:name)
-      piano.name.should eql('Piano')
+      piano.name.should eql('Neo')
     end
     
     it "should accept a hash of properties with symbols as keys" do
-      piano = subject.new({ :name => 'Piano' })
+      piano = subject.new({ :name => 'Neo' })
       piano.should respond_to(:name)
-      piano.name.should eql('Piano')
+      piano.name.should eql('Neo')
     end
   end
   

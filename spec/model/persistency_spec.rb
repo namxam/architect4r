@@ -4,17 +4,17 @@ describe "Persistency extension" do
   
   describe :create do
     
-    subject { TestNodeWithCastedProperties.new }
+    subject { Person.new }
     
     it "should create a new node" do
-      subject.name = 'Max Mustermann'
-      subject.age = 18
+      subject.name = 'Neo'
+      subject.human = true
       subject.create.should be_true
     end
     
     it "should save a new node" do
-      subject.name = 'Max Mustermann'
-      subject.age = 18
+      subject.name = 'Neo'
+      subject.human = true
       subject.save.should be_true
     end
     
@@ -23,7 +23,7 @@ describe "Persistency extension" do
   describe :update do
     
     before(:all) do
-      @node = TestNodeWithCastedProperties.new(:name => 'Max Mustermann')
+      @node = Person.new(:name => 'Neo', :human => true, :note => 'Important person')
       @node.create
     end
     
@@ -34,45 +34,45 @@ describe "Persistency extension" do
     subject { @node }
     
     it "should update the name" do
-      subject.name = "Lisa von Pisa"
+      subject.name = "Agent Smith"
       subject.update.should be_true
-      subject.name.should == "Lisa von Pisa"
+      subject.name.should == "Agent Smith"
       
-      reloaded = TestNodeWithCastedProperties.find_by_id(subject.id)
-      reloaded.name.should == "Lisa von Pisa"
+      reloaded = Person.find_by_id(subject.id)
+      reloaded.name.should == "Agent Smith"
     end
     
     it "should add new properties" do
-      subject.age.should be_nil
-      subject.age = 18
+      subject.age_when_enlightend.should be_nil
+      subject.age_when_enlightend = 18
       subject.update.should be_true
-      subject.age.should == 18
+      subject.age_when_enlightend.should == 18
       
-      reloaded = TestNodeWithCastedProperties.find_by_id(subject.id)
-      reloaded.age.should == 18
+      reloaded = Person.find_by_id(subject.id)
+      reloaded.age_when_enlightend.should == 18
     end
     
     it "should remove empty properties" do
-      subject.name.should_not be_nil
-      subject.name = nil
+      subject.note.should_not be_nil
+      subject.note = nil
       
       subject.update.should be_true
-      subject.name.should be_nil
+      subject.note.should be_nil
       
-      reloaded = TestNodeWithCastedProperties.find_by_id(subject.id)
-      reloaded.name.should be_nil
+      reloaded = Person.find_by_id(subject.id)
+      reloaded.note.should be_nil
     end
     
   end
   
   describe :delete do
     
-    subject { TestNodeWithCastedProperties.create(:name => 'Max Mustermann') }
+    subject { Person.create(:name => 'Max Mustermann', :human => true) }
     
     it "should delete an existing node" do
       deleted_id = subject.id
       subject.destroy.should be_true
-      TestNodeWithCastedProperties.find_by_id(deleted_id).should be_nil
+      Person.find_by_id(deleted_id).should be_nil
     end
     
     it "should mark the object as deleted" do
@@ -91,7 +91,7 @@ describe "Persistency extension" do
   
   describe :new? do
     
-    subject { TestNodeWithCastedProperties.new }
+    subject { Person.new(:name => 'Name', :human => true) }
     
     it "should be true if its a new record" do
       subject.new?.should be_true
