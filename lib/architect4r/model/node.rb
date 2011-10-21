@@ -54,9 +54,6 @@ module Architect4r
           self.raw_data = result
           
           # Link the node with a model root node
-          puts
-          puts "--- self: #{self.id}"
-          puts "--- model root: #{self.class.model_root.inspect}"
           connection.create_relationship(self.id, self.class.model_root, 'model_type')
         end
         

@@ -37,6 +37,10 @@ require 'architect4r/model/relationships'
 require 'architect4r/model/node'
 require 'architect4r/model/relationship'
 
+#
+# Generic items
+#
+require 'architect4r/generic_node'
 
 #
 # The namespace
