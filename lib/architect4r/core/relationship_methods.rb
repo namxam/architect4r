@@ -51,7 +51,7 @@ module Architect4r
           # Send request
           url = node_url(node) + "/relationships/#{direction}/#{types}"
           response = Typhoeus::Request.get(url, :headers => { 'Accept' => 'application/json' })
-          response.code == 200 ? JSON.parse(response.body) : nil
+          response.code == 200 ? JSON.parse(response.body) : []
         end
         
         def update_relationship_properties(node, data)
