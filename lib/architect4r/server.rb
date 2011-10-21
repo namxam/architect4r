@@ -5,8 +5,6 @@ module Architect4r
   
   class Server
     
-    class InvalidCypherQuery < SyntaxError; end
-    
     include Architect4r::Core::CypherMethods
     include Architect4r::Core::NodeMethods
     include Architect4r::Core::RelationshipMethods

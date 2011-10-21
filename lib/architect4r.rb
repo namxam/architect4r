@@ -47,4 +47,6 @@ module Architect4r
     "Architect4r version #{Architect4r::VERSION}"
   end
   
+  class InvalidCypherQuery < SyntaxError; end
+  
 end
