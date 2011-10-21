@@ -15,6 +15,10 @@ module Architect4r
       
       attr_accessor :raw_data
       
+      def initialize(properties={})
+        parse_properties(properties)
+      end
+      
       # Create the document. Validation is enabled by default and will return
       # false if the document is not valid. If all goes well, the document will
       # be returned.

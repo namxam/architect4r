@@ -11,15 +11,13 @@ module Architect4r
       end
       
       module InstanceMethods
-        def initialize(properties = {})
-          super()
-
+        def parse_properties(properties = {})
           # Init property data
           @properties_data = {}
-
+          
           set_properties_from_hash(properties)
         end
-
+        
         # Return a hash of all properties which can be transformed into json
         # Remove all nil values, as those cannot be stored in the graph
         def _to_database_hash
