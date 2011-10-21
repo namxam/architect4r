@@ -23,6 +23,11 @@ module Architect4r
           response.code == 201 ? JSON.parse(response.body) : nil
         end
         
+        def get_relationship(relationship)
+          response = Typhoeus::Request.get(relationship_url(relationship), :headers => { 'Accept' => 'application/json' })
+          response.code == 200 ? JSON.parse(response.body) : nil
+        end
+        
         def delete_relationship(relationship)
           response = Typhoeus::Request.delete(relationship_url(relationship), :headers => { 'Accept' => 'application/json' })
           response.code == 204 ? true : false
@@ -54,10 +59,14 @@ module Architect4r
           response.code == 200 ? JSON.parse(response.body) : []
         end
         
-        def update_relationship_properties(node, data)
+        def update_relationship(id, properties)
           # PUT http://localhost:7474/db/data/relationship/0/properties
           # 204: No Content
-          raise 'not implemented'
+          url = relationship_url(id) + '/properties'
+          response = Typhoeus::Request.put(url, 
+            :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
+            :body => properties.to_json)
+          response.code == 204 ? true : false
         end
         
         def get_relationship_types

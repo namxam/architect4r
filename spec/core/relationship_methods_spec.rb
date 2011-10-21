@@ -59,6 +59,30 @@ describe Architect4r::Server do
     subject.get_node_relationships(0).should be_a(Array)
   end
   
+  it "should load a relationship" do
+    node = subject.create_node({ 'name' => 'A test node' })
+    rel = subject.create_relationship(node, node, 'test', { 'some' => 'data' })
+    data = subject.get_relationship(rel)
+    data.should be_a(Hash)
+    data['data']['some'].should == 'data'
+  end
+  
+  it "should update a nodes properties" do
+    node = subject.create_node({ 'name' => 'A test node' })
+    original_rel = subject.create_relationship(node, node, 'self-reference', { 'note' => 'Some random note', 'obsolete' => '1' })
+    original_rel.should be_a(Hash)
+    
+    # Update some attributes
+    result = subject.update_relationship(original_rel, { 'note' => 'Some changed note', 'highlight' => 'note'})
+    result.should be_true
+    
+    # check result
+    changed_rel = subject.get_relationship(original_rel)
+    changed_rel['data']['note'].should == 'Some changed note'
+    changed_rel['data'].has_key?('obsolete').should be_false
+    changed_rel['data']['highlight'].should == 'note'
+  end
+  
   it "should know about all relationship types" do
     node = subject.create_node({ 'name' => 'A test node' })
     subject.create_relationship(node, node, 'self-reference')
