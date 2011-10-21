@@ -63,7 +63,8 @@ module Architect4r
         def get_relationship_types
           # GET http://localhost:7474/db/data/relationship/types
           # 200: OK
-          raise 'not implemented'
+          response = Typhoeus::Request.get(prepend_base_url('/relationship/types'), :headers => { 'Accept' => 'application/json' })
+          response.code == 200 ? JSON.parse(response.body) : []
         end
         
       end

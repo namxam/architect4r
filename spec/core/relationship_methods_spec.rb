@@ -58,5 +58,11 @@ describe Architect4r::Server do
   it "should retrieve all relationships" do
     subject.get_node_relationships(0).should be_a(Array)
   end
+  
+  it "should know about all relationship types" do
+    node = subject.create_node({ 'name' => 'A test node' })
+    subject.create_relationship(node, node, 'self-reference')
+    subject.get_relationship_types.should include('self-reference')
+  end
 
 end

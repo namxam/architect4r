@@ -19,15 +19,10 @@ end
 
 RSpec.configure do |config|
   config.color_enabled = true
-  #config.formatter     = 'documentation'
-  #c.filter_run_excluding :slow => true
-  
   neo_manager = Architect4r::InstanceManager.new(File.join(File.dirname(__FILE__), '../neo4j_server'))
   
   config.before(:suite) do
     neo_manager.reset_to_sample_data(File.join(File.dirname(__FILE__), "fixtures/graph.db.default/"))
-    
-    #subject.create_node({ 'name' => 'My test node', 'friends' => 13 })
   end
   
   config.after(:suite) do
