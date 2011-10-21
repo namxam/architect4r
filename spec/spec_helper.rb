@@ -77,7 +77,7 @@ class CrewMembership < Architect4r::Model::Relationship
   property :member_since, :cast_to => DateTime
   property :rank, :cast_to => String
   
-  # Type enforcements
-  #source :type => Ship
-  #destination :type => Person
+  # Validations
+  #validates, :source, :type => Ship
+  #validates, :destination, :type => Person
 end
