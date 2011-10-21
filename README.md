@@ -19,9 +19,9 @@ add the following line to your _Gemfile_: `gem "architect4r"`.
 
 Quick Start
 -----------
-
+    
     # Class definition
-    class Instrument < Architect4r::Model
+    class Instrument < Architect4r::Model::Node
       # Properties
       property :name, :cast_to => String, :localize => true
       property :name, :cast_to => String, :localize => :de
@@ -40,15 +40,6 @@ Quick Start
     instrument.valid?
     instrument.save
     
-    # Associations between objects
-    instrument.links.outgoing
-    instrument.links.incoming
-    instrument.links.both
-    
-    # Filter associations by relationship type (incoming, outcoming, both)
-    instrument.links.outgoing(:category, :fan)
-    
-    
     class Fanship < Architect4r::Model::Relationship
       # All relationships need a unique descriptor
       descriptor 'fanship' # if not set it is derived from the class name
@@ -58,23 +49,20 @@ Quick Start
       property :reason, :cast_to => String
     end
     
+    # Filter associations by relationship type (:incoming, :outgoing, :all)
+    instrument.links(:outgoing)
+    
     # Init a class based relationship
-    Fanship.new( :start_node => @user,
-                 :end_node => @instrument,
-                 :created_at => DateTime.new, 
-                 :reason => 'Because I like you')
+    Fanship.new( @user, @instrument, {:reason => 'Because I like you'})
     
-    # Query by type
-    @user.links.outgoing(Fanship)
+    # Query by model or type
+    @user.links(:all, Fanship, 'studies')
     
-    
-    
-    # Create a complex relationships
-    relationship = instrument.links.incoming.new
-    relationship.save
+    # Create a custom relationship
+    relationship = Architect4r::Model::Relationship.create(start_node, end_note, 'CustomType', { :active => true })
     # or
-    instrument.links.incoming.create(:category, @other_node, { :created_at => DateTime.new, :active => true })
-    instrument.links.incoming.create(CategoryRelation, @other_node, { :created_at => DateTime.new, :active => true })
+    instrument.links(:incoming).create(:category, @other_node, { :created_at => DateTime.new, :active => true })
+    instrument.links(:incoming).create(CategoryRelation, @other_node, { :created_at => DateTime.new, :active => true })
     
     
     # Updating attributes
@@ -90,44 +78,27 @@ Quick Start
 Roadmap / Next Steps
 --------------------
 
-_Version 0.3_
+Check the release notes for info on previous versions
+
+_Currectly working on_
 
 * Add relationships
 * Auto add class related nodes to a class root node for easy queries
 
-_Version 0.4_
-
+_Planned upcoming features_
 * Add node indexes
 * Add relationship indexes
 * Add auto indexing of node properties / nodes (not neo4j auto indexing)
-
-_Version 0.5_
-
 * Add more node finders by using indexes
-
-_Version 0.6_
-
 * Create a ORM (ActiveRecord) synced node
-
-_Version 0.7_
-
 * Give the cypher plugin some more love
 * Add more default queries
-
-_Version 0.8_
-
 * Rake tasks for installing neo4j
 * Rake tasks for test setup
-
-_Version 0.9_
-
 * Make it compatible to paperclip and carrierwave
 * Make it compatible to sunspot search
 * Add basic authentication
 * Add digest authentication
-
-_Version 1.0_
-
 * Improve test case
 * Optimize, optimize, optimize
 
