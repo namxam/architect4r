@@ -39,8 +39,9 @@ describe Architect4r::Model::Relationship do
   describe "Creating a new relationship" do
     
     it "should create a new relationship" do
-      ms = CrewMembership.new(ship, person, { :rank => 'Captain' })
+      ms = CrewMembership.new(ship, person)
       ms.save.should be_true
+      ms.persisted?.should be_true
     end
     
     it "should allow changing relationship properties" do

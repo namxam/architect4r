@@ -40,9 +40,9 @@ module Architect4r
         end
         
         # Detect properties
-        if properties = args[0].is_a?(Hash) && args.shift
-          parse_properties(properties)
-        end
+        properties = args[0].is_a?(Hash) && args.shift
+        properties ||= {}
+        parse_properties(properties)
       end
       
       # Create the document. Validation is enabled by default and will return
