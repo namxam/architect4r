@@ -24,4 +24,14 @@ describe "Node Queries" do
     
   end
   
+  describe "counting records" do
+    
+    it "should count the number of records" do
+      Person.create(:name => 'Neo', :human => true)
+      Person.create(:name => 'Trinity', :human => true)
+      Person.count.should >= 2
+    end
+    
+  end
+  
 end

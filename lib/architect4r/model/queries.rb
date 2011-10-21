@@ -14,7 +14,8 @@ module Architect4r
         end
         
         def count(opts = {}, &block)
-          raise 'not implemented'
+          data = connection.execute_cypher("start s=node(#{self.model_root.id}) match (s)<-[:model_type]-(d) return count(d)")
+          data.first['count(d)']
         end
         
         def first(opts = {})
