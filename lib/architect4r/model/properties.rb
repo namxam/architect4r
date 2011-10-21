@@ -46,7 +46,7 @@ module Architect4r
           # TODO: Mark dirty attribute tracking
 
           # Cast the value before storing it
-          cast_to = opts[:cast_to] || Object
+          cast_to = opts && opts[:cast_to] || Object
 
           @properties_data[property.to_s] = if value.nil?
             nil
