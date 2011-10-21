@@ -11,17 +11,14 @@ module Architect4r
     
     def start
       %x[#{server_path}/bin/neo4j start]
-      puts '--- neo4j server started'
     end
     
     def stop
       %x[#{server_path}/bin/neo4j stop]
-      puts '--- neo4j server stopped'
     end
     
     def restart
       %x[#{server_path}/bin/neo4j restart]
-      puts '--- neo4j server restarted'
     end
     
     def reset
