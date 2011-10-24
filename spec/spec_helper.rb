@@ -1,5 +1,6 @@
 require 'rspec'
 require 'rake'
+#require 'active_record'
 require 'architect4r'
 require 'architect4r/instance_manager'
 
@@ -75,4 +76,40 @@ class CrewMembership < Architect4r::Model::Relationship
   # Validations
   #validates, :source, :type => Ship
   #validates, :destination, :type => Person
+end
+
+class SomeDatabaseModelNode < Architect4r::Model::Node
+ use_server TEST_SERVER
+ property :name, :cast_to => String
+end
+
+class SomeDatabaseModel
+  
+  extend ActiveModel::Callbacks
+  define_model_callbacks :create, :update, :destroy
+  
+  # Init architect4r integration
+  include Architect4r::HasNode
+  has_node :node, SomeDatabaseModelNode, :sync => [:name]
+  
+  attr_accessor :id, :name
+  
+  def create(attributes={})
+    run_callbacks :create do
+      true
+    end
+  end
+  
+  def destroy
+    run_callbacks :destroy do
+      true
+    end
+  end
+  
+  def update
+    run_callbacks :update do
+      true
+    end
+  end
+  
 end

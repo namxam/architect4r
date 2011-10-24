@@ -43,6 +43,15 @@ require 'architect4r/model/relationship'
 require 'architect4r/generic_node'
 
 #
+# Support for multi database environments
+#
+require 'architect4r/has_node'
+# Auto load the extension when active record is used
+if defined?(ActiveRecord::Base)
+  ActiveRecord::Base.send(:include, Architect4r::HasNode)
+end
+
+#
 # The namespace
 #
 module Architect4r
