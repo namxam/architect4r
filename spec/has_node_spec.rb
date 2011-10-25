@@ -74,29 +74,13 @@ describe Architect4r::HasNode do
   
   describe "node sync" do
     it "should store the changed attributes to the node" do
-      puts
-      puts "=" * 30
-      puts
       subject.id = 4
       subject.name = "My sync test"
       subject.create
-      
-      puts 
-      puts "=== Created node"
-      
       subject.node.name.should == subject.name
       subject.name = "My changed sync test"
-      
-      puts
-      puts "=" * 30
-      puts
-      
       subject.update
       subject.node.name.should == subject.name
-      
-      puts
-      puts "=" * 30
-      puts
     end
   end
   

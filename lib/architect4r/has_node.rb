@@ -61,14 +61,12 @@ module Architect4r
           
           options[:sync].to_a.each do |prop|
             if self.node.send("#{prop}") != self.send(prop)
-              puts ">>> Changing #{prop} from #{self.node.send("#{prop}")} to #{self.send(prop)}"
               self.node.send("#{prop}=", self.send(prop))
               changed = true
             end
           end
           
           if changed
-            puts ">>> Data: #{self.node.instance_variable_get(:'@properties_data').inspect}"
             self.node.save
           end
         end

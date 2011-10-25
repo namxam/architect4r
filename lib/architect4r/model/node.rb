@@ -4,6 +4,7 @@ module Architect4r
     
     class Node
       include Architect4r::Model::Connection
+      include Architect4r::Model::Callbacks
       include Architect4r::Model::Persistency
       include Architect4r::Model::Queries
       include Architect4r::Model::Relationships
@@ -40,51 +41,63 @@ module Architect4r
       attr_accessor :raw_data
       
       def initialize(properties={})
-        parse_properties(properties)
+        run_callbacks :initialize do
+          parse_properties(properties)
+        end
       end
       
       # Create the document. Validation is enabled by default and will return
       # false if the document is not valid. If all goes well, the document will
       # be returned.
       def create(options = {})
-        # only create valid records
-        return false unless perform_validations(options)
+        run_callbacks :create do
+          run_callbacks :save do
+            # only create valid records
+            return false unless perform_validations(options)
         
-        # perform creation
-        if result = connection.create_node(self._to_database_hash)
-          self.raw_data = result
+            # perform creation
+            if result = connection.create_node(self._to_database_hash)
+              self.raw_data = result
           
-          # Link the node with a model root node
-          connection.create_relationship(self.id, self.class.model_root.id, 'model_type')
-        end
+              # Link the node with a model root node
+              connection.create_relationship(self.id, self.class.model_root.id, 'model_type')
+            end
         
-        # if something goes wrong we receive a nil value and return false
-        !result.nil?
+            # if something goes wrong we receive a nil value and return false
+            !result.nil?
+          end
+        end
       end
       
       # Trigger the callbacks (before, after, around)
       # only if the document isn't new
       def update(options = {})
-        # Check if record can be updated
-        raise "Cannot save a destroyed document!" if destroyed?
-        raise "Calling #{self.class.name}#update on document that has not been created!" if new?
+        run_callbacks :update do
+          run_callbacks :save do
+            # Check if record can be updated
+            raise "Cannot save a destroyed document!" if destroyed?
+            raise "Calling #{self.class.name}#update on document that has not been created!" if new?
         
-        # Check if we can continue
-        return false unless perform_validations(options)
+            # Check if we can continue
+            return false unless perform_validations(options)
         
-        # perform update
-        result = connection.update_node(self.id, self._to_database_hash)
+            # perform update
+            result = connection.update_node(self.id, self._to_database_hash)
         
-        # if something goes wrong we receive a nil value and return false
-        !result.nil?
+            # if something goes wrong we receive a nil value and return false
+            !result.nil?
+          end
+        end
       end
       
       def destroy
-        if result = connection.delete_node(self.id)
-          @_destroyed = true
-          self.freeze
+        run_callbacks :destroy do
+          if result = connection.delete_node(self.id)
+            @_destroyed = true
+            self.freeze
+          end
+          result
         end
-        result
       end
       
       def self.model_root_relation_type
