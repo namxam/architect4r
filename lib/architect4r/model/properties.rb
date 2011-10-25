@@ -13,7 +13,7 @@ module Architect4r
       module InstanceMethods
         def parse_properties(properties = {})
           @properties_data = {}
-          set_properties_from_hash(properties)
+          update_attributes_without_saving(properties)
         end
         
         # Return a hash of all properties which can be transformed into json
@@ -65,7 +65,7 @@ module Architect4r
           end
         end
         
-        def set_properties_from_hash(hash)
+        def update_attributes_without_saving(hash)
           return if hash.nil?
           hash.each do |key, value|
             if self.respond_to?("#{key}=")
@@ -75,6 +75,9 @@ module Architect4r
             end
           end
         end
+        alias :attributes= :update_attributes_without_saving
+        
+        
       end
       
       module ClassMethods
