@@ -3,7 +3,7 @@ module Architect4r
     class Relationship
       
       #
-      # Extensions
+      # Architect4r extensions
       #
       include Architect4r::Model::Connection
       include Architect4r::Model::Callbacks
@@ -12,6 +12,8 @@ module Architect4r
       
       def self.inherited(subklass)
         super
+        subklass.send(:include, ActiveModel::Conversion)
+        subklass.extend ActiveModel::Naming
         subklass.send(:include, Architect4r::Model::Properties)
         subklass.send(:include, Architect4r::Model::Validations)
         
