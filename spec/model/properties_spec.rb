@@ -85,9 +85,7 @@ describe "Model properties based on test class Person" do
       obj = subject.new('name' => 'Neo', 'size' => 3)
       data_hash = obj.send(:_to_database_hash)
       data_hash['name'].should == 'Neo'
-      data_hash.has_key?('size').should be_false
       data_hash.has_key?('human').should be_false
-      data_hash.keys.size.should == 2
     end
     
     it "should not include nil values" do

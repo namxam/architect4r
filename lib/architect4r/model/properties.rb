@@ -12,9 +12,7 @@ module Architect4r
       
       module InstanceMethods
         def parse_properties(properties = {})
-          # Init property data
           @properties_data = {}
-          
           set_properties_from_hash(properties)
         end
         
@@ -39,15 +37,15 @@ module Architect4r
         def write_attribute(property, value, locale = nil)
           # retrieve options for the attribute
           opts = self.class.properties[property.to_s]
-
+          
           # Check if we should store a localized version of the data
           property = "#{property}_#{locale}" if locale
-
+          
           # TODO: Mark dirty attribute tracking
-
+          
           # Cast the value before storing it
           cast_to = opts && opts[:cast_to] || Object
-
+          
           @properties_data[property.to_s] = if value.nil?
             nil
           elsif cast_to == String
@@ -70,7 +68,11 @@ module Architect4r
         def set_properties_from_hash(hash)
           return if hash.nil?
           hash.each do |key, value|
-            self.send("#{key}=", value) if self.respond_to?("#{key}=")
+            if self.respond_to?("#{key}=")
+              self.send("#{key}=", value)
+            else
+              @properties_data[key] = value
+            end
           end
         end
       end
