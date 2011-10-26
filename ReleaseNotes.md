@@ -1,5 +1,16 @@
 # Release Notes
 
+## v0.3.3
+
+* Add magic timestamp! property for tracking timestamps
+
+  By putting timestamps! into your model, it tracks the creation date and 
+  time in created\_at and updates in updated\_at
+
+* Allow referencing model_roots in cypher queries.
+
+  If you have a model User the reference key would be :user_root
+
 ## v0.3.2
 
 * Support for carrierwave file upload mechanism

@@ -36,6 +36,7 @@ Quick Start
       # Properties
       property :name, :cast_to => String, :localize => true
       property :name, :cast_to => String, :localize => :de
+      timestamps!
       
       # Validations
       validates :name, :presence => true
