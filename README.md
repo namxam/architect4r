@@ -3,7 +3,18 @@
 Architect4r is intended as an easy ruby wrapper for the neo4j graph db 
 REST API. There are other solutions such as neo4j.rb if you are working 
 in a java environment or neography which provides another working wrapper 
-for the REST API.
+for the REST API. Both solutions are far more feature complete and allow 
+you to do pretty advanced queries on the graph.
+
+Architect4r is trying to go another route. Instead of using the native 
+graph traversal engine it requires you to write your queries in recently 
+implemented cypher query language. The language is well documented at the 
+official neo4j documentation (http://docs.neo4j.org/chunked/milestone/). 
+Just that you know what you are dealing with… a little example:
+
+    start s=node(1) match s-[:friends]-d return d order by d.name skip 0 limit 20
+
+But please read the docs for more info.
 
 Requirements
 ------------
