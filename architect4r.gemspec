@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Architect4r::VERSION
   s.authors     = ["Maximilian Schulz"]
   s.email       = ["m.schulz@kulturfluss.de"]
-  s.homepage    = "http://www.kulturfluss.de/"
+  s.homepage    = "https://github.com/namxam/architect4r/"
   s.summary     = %q{A gem for working with the neo4j REST interface.}
   s.description = %q{This gem is intended for making a neo4j graph db accessible by providing a ruby wrapper for the REST API.}
   
