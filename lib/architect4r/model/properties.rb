@@ -54,6 +54,8 @@ module Architect4r
             value.to_i
           elsif cast_to == Float
             value.to_f
+          elsif cast_to == DateTime
+            value.to_datetime
           elsif cast_to == TrueClass or cast_to == FalseClass
             if value.kind_of?(Integer)
               value == 1
@@ -90,12 +92,15 @@ module Architect4r
         end
         
         def timestamps!
-          property(:updated_at, :cast_to => Time)
-          property(:created_at, :cast_to => Time)
+          property(:updated_at, :cast_to => DateTime)
+          property(:created_at, :cast_to => DateTime)
+          
+          set_callback :create, :before do |object|
+            write_attribute('created_at', DateTime.now)
+          end
           
           set_callback :save, :before do |object|
-            write_attribute('updated_at', Time.now)
-            write_attribute('created_at', Time.now) if object.new?
+            write_attribute('updated_at', DateTime.now)
           end
         end
         

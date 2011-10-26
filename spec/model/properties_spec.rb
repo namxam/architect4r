@@ -162,4 +162,39 @@ describe "Model properties based on test class Person" do
     
   end
   
+  describe "automatic tracking of create and update timestamps" do
+    
+    subject { Person.new(:name => 'Person with timestamps', :human => false) }
+    
+    it "should allow setting timestamps" do
+      subject.should respond_to(:created_at)
+      subject.should respond_to(:updated_at)
+    end
+    
+    it "should create the timestamps only after creation" do
+      subject.created_at.should be_nil
+      subject.updated_at.should be_nil
+      subject.save
+      subject.created_at.should be_a(DateTime)
+      subject.updated_at.should be_a(DateTime)
+    end
+    
+    it "should keep the created_at timestamp untouched after creation" do
+      subject.save
+      the_stamp = subject.created_at
+      subject.vita = "Some random info"
+      subject.save
+      subject.created_at.should == the_stamp
+    end
+    
+    it "should update the updated_at timestamp" do
+      subject.save
+      the_stamp = subject.updated_at
+      subject.vita = "Some random info"
+      subject.save
+      subject.updated_at.should > the_stamp
+    end
+    
+  end
+  
 end

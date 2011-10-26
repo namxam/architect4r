@@ -41,6 +41,7 @@ class Person < Architect4r::Model::Node
   property :birthday, :cast_to => Date
   property :age_when_enlightend, :cast_to => Integer
   property :note, :cast_to => String, :localize => true
+  timestamps!
   
   # Validations
   validates :name, :presence => true, :length => { :minimum => 3, :allow_nil => true }
