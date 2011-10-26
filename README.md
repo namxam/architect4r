@@ -40,72 +40,20 @@ Quick Start
     instrument.valid?
     instrument.save
     
+    # Updating attributes
+    instrument.update_attributes(params[:instrument])
+    
+    # Finding records
+    Instrument.find_by_id(123)
+    
     class Fanship < Architect4r::Model::Relationship
-      # All relationships need a unique descriptor
-      descriptor 'fanship' # if not set it is derived from the class name
-      
       # Properties
       property :created_at, :cast_to => DateTime
       property :reason, :cast_to => String
     end
     
     # Init a class based relationship
-    Fanship.new( @user, @instrument, { :reason => 'Because I like you' })
-    
-    # Filter associations by relationship type (:incoming, :outgoing, :all)
-    instrument.links(:outgoing)
-    
-    # Query by model or type
-    @user.links(:all, Fanship, 'studies')
-    
-    # Create a custom relationship
-    relationship = Architect4r::Model::Relationship.create(start_node, end_note, 'CustomType', { :active => true })
-    # or
-    instrument.links(:incoming).create(:category, @other_node, { :created_at => DateTime.new, :active => true })
-    instrument.links(:incoming).create(CategoryRelation, @other_node, { :created_at => DateTime.new, :active => true })
-    
-    
-    # Updating attributes
-    instrument.update_attributes(params[:instrument])
-    
-    # Finding records
-    Instrument.all
-    Instrument.find_by_id(123)
-    Instrument.find_by_name("Piano")
-    Instrument.find_by_name("Klavier", :de)
-    Instrument.find_by_cypher("start cat=(123) match (cat)--(x) return x limit 2")
-
-Roadmap / Next Steps
---------------------
-
-Check the release notes for info on previous versions
-
-_Currectly working on_
-
-* Add relationships
-* Auto add class related nodes to a class root node for easy queries
-
-_Planned upcoming features_
-* Add node indexes
-* Add relationship indexes
-* Add auto indexing of node properties / nodes (not neo4j auto indexing)
-* Add more node finders by using indexes
-* Create a ORM (ActiveRecord) synced node
-* Give the cypher plugin some more love
-* Add more default queries
-* Rake tasks for installing neo4j
-* Rake tasks for test setup
-* Make it compatible to paperclip and carrierwave
-* Make it compatible to sunspot search
-* Add basic authentication
-* Add digest authentication
-* Improve test case
-* Versioning of nodes (update node but create a linked node with the old properties)
-* Optimize, optimize, optimize
-
-_sometime in the future_
-
-* Allow batch execution by facilitating hydra's concurrency model
+    Fanship.new(@user, @instrument, { :reason => 'Because I like you' })
 
 License
 -------
