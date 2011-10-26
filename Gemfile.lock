@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    architect4r (0.2)
+    architect4r (0.3)
       activemodel (~> 3.0)
       json (~> 1.5)
       typhoeus (~> 0.2)

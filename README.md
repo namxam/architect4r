@@ -49,11 +49,11 @@ Quick Start
       property :reason, :cast_to => String
     end
     
+    # Init a class based relationship
+    Fanship.new( @user, @instrument, { :reason => 'Because I like you' })
+    
     # Filter associations by relationship type (:incoming, :outgoing, :all)
     instrument.links(:outgoing)
-    
-    # Init a class based relationship
-    Fanship.new( @user, @instrument, {:reason => 'Because I like you'})
     
     # Query by model or type
     @user.links(:all, Fanship, 'studies')
@@ -100,6 +100,7 @@ _Planned upcoming features_
 * Add basic authentication
 * Add digest authentication
 * Improve test case
+* Versioning of nodes (update node but create a linked node with the old properties)
 * Optimize, optimize, optimize
 
 _sometime in the future_
