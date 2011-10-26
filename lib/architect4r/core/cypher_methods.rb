@@ -46,11 +46,13 @@ module Architect4r
         
         def interpolate_node_model_root_references(query)
           query.scan(/node\((:[^)]*_root)\)/i).flatten.uniq.each do |str|
-            model_name = str.match(/^:(.*)_root$/)[1].to_s.capitalize
-            if model_name.length > 0 and Object.const_defined?(model_name)
-              the_model = Object.const_get(model_name)
-              if the_model and the_model.respond_to?(:model_root)
-                query.gsub!(str, the_model.model_root.id.to_s)
+            model_name = str.match(/^:(.*)_root$/)[1].to_s.classify
+            if model_name.length > 0
+              # As const_defined? and const_get to not support namespaces, we have to use eval :(
+              begin
+                query.gsub!(str, eval("#{model_name}.model_root.id.to_s"))
+              rescue NoMethodError => ex
+                nil
               end
             end
           end

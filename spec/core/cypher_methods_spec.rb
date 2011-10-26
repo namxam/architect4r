@@ -52,6 +52,19 @@ describe Architect4r::Server do
       result.should == "start p=node(1), s=node(1) match something"
     end
     
+    it "should support namespaced models" do
+      module MyNamespace; class UserNode; end; end
+      MyNamespace::UserNode.should_receive(:model_root).and_return(stub(:id => 11))
+      result = subject.interpolate_node_model_root_references("start s=node(:my_namespace/user_node_root) match something")
+      result.should == "start s=node(11) match something"
+    end
+    
+    it "should support camel case models" do
+      SomeDatabaseModelNode.should_receive(:model_root).and_return(stub(:id => 12))
+      result = subject.interpolate_node_model_root_references("start s=node(:some_database_model_node_root) match something")
+      result.should == "start s=node(12) match something"
+    end
+    
   end
   
 end
