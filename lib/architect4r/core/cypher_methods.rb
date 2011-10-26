@@ -6,6 +6,9 @@ module Architect4r
       module InstanceMethods
         
         def execute_cypher(query)
+          
+          query = self.interpolate_node_model_root_references(query)
+          
           url = prepend_base_url("/ext/CypherPlugin/graphdb/execute_query")
           response = Typhoeus::Request.post(url, 
             :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
@@ -39,6 +42,19 @@ module Architect4r
             end
             results
           end
+        end
+        
+        def interpolate_node_model_root_references(query)
+          query.scan(/node\((:[^)]*_root)\)/i).flatten.uniq.each do |str|
+            model_name = str.match(/^:(.*)_root$/)[1].to_s.capitalize
+            if model_name.length > 0 and Object.const_defined?(model_name)
+              the_model = Object.const_get(model_name)
+              if the_model and the_model.respond_to?(:model_root)
+                query.gsub!(str, the_model.model_root.id.to_s)
+              end
+            end
+          end
+          query
         end
         
       end
