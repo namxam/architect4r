@@ -24,10 +24,11 @@ RSpec.configure do |config|
   
   config.before(:suite) do
     neo_manager.reset_to_sample_data(File.join(File.dirname(__FILE__), "fixtures/graph.db.default/"))
+    neo_manager.start
   end
   
   config.after(:suite) do
-    neo_manager.start
+    neo_manager.stop
   end
 end
 

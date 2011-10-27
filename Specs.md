@@ -2,6 +2,35 @@
 
 Some code which might define the future interface of the gem.
     
+    # Defining
+    
+    class Character < Architect4r::Model::Node
+      property :name, :cast_to => String
+      property :human, :cast_to => TrueClass
+      timestamps!
+      
+      def ships
+        class.find_by_cypher("start s=node(#{id}) match s-[:CrewMembership]->d return d", "d")
+      end
+      
+      def crew_memberships
+        class.find_by_cypher("start s=node(#{id}) match s-[r:CrewMembership]->d return d, r", "d")
+      end
+    end
+    
+    class Ship < Architect4r::Model::Node
+      property :name, :cast_to => String
+    end
+    
+    class CrewMembership < Architect4r::Model::Relationship
+      property :rank, :cast_to => String
+    end
+    
+    neo = Character.find_by_id(15)
+    neo.
+    
+    
+    
     # Finding records
     Instrument.all
     Instrument.find_by_name("Piano")

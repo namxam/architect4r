@@ -1,5 +1,12 @@
 # Release Notes
 
+## v0.3.4
+
+* Allow fetching items, such as nodes and relationships in one query
+  
+  By using the server's cypher_query() method, it is possible to fetch 
+  multiple items of different types by using a single query.
+
 ## v0.3.3
 
 * Add magic timestamp! property for tracking timestamps
