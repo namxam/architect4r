@@ -39,16 +39,6 @@ module Architect4r
       response.success? ? JSON.parse(response.body) : nil
     end
     
-    protected
-    
-    def prepend_base_url(url)
-      if url[0,4] == "http"
-        url
-      else
-        "http://#{configuration.host}:#{configuration.port}#{configuration.path}/db/data#{url}"
-      end
-    end
-    
     def node_url(url_or_id)
       if url_or_id.is_a?(Hash)
         url_or_id['self'].to_s
@@ -69,8 +59,27 @@ module Architect4r
       end
     end
     
-    def convert_if_possible(data)
+    # Build a node or relationship from the hash neo4j returns.
+    def convert_if_possible(object_hash)
+      if klass = object_hash.is_a?(Hash) && object_hash['data'] && object_hash['data']['architect4r_type']
+        data = begin
+          eval("#{klass}.send(:build_from_database, object_hash)")
+        rescue => ex
+          data
+        end
+      end
       data
+    end
+    
+    
+    protected
+    
+    def prepend_base_url(url)
+      if url[0,4] == "http"
+        url
+      else
+        "http://#{configuration.host}:#{configuration.port}#{configuration.path}/db/data#{url}"
+      end
     end
     
   end
