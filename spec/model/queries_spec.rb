@@ -22,6 +22,19 @@ describe "Node Queries" do
       Person.find_by_id(ship.id).should be_nil
     end
     
+    it "should return nil when the node is not found" do
+      Person.find_by_id(-1).should be_nil
+    end
+    
+    it "should raise an exception when banged finder is used an no record found" do
+      lambda { Person.find_by_id!(-1) }.should raise_error(Architect4r::RecordNotFound)
+    end
+    
+    it "should not raise an exception when banged finder is used an a record is found" do
+      person = Person.create(:name => 'The Architect', :human => false)
+      lambda { Person.find_by_id!(person.id) }.should_not raise_error(Architect4r::RecordNotFound)
+    end
+    
   end
   
   describe "counting records" do

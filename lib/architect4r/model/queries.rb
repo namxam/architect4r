@@ -21,7 +21,7 @@ module Architect4r
         end
         
         def find_by_id!(id)
-          raise 'not implemented'
+          self.find_by_id(id) || raise(Architect4r::RecordNotFound.new("Could not find the #{self.name} with id #{id}!"))
         end
         
         def find_by_cypher(query, identifier)

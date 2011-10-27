@@ -62,5 +62,6 @@ module Architect4r
   end
   
   class InvalidCypherQuery < SyntaxError; end
+  class RecordNotFound < StandardError; end
   
 end
