@@ -7,6 +7,7 @@ module Architect4r
         
         def execute_cypher(query)
           query = self.interpolate_node_model_root_references(query)
+          
           url = prepend_base_url("/ext/CypherPlugin/graphdb/execute_query")
           response = Typhoeus::Request.post(url, 
             :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
@@ -27,6 +28,23 @@ module Architect4r
             nil
           else
             JSON.parse(response.body)
+          end
+        end
+        
+        def cypher_query(query, transform=true)
+          # Get data from server
+          data = execute_cypher(query)
+          
+          # Create native ruby objects
+          data['data'].map! do |set|
+            set.map { |item| convert_if_possible(item) }
+          end
+          
+          # Transform to hash form
+          if transform
+            transform_cypher_result_to_hash(data)
+          else
+            data
           end
         end
         

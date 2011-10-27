@@ -61,11 +61,15 @@ module Architect4r
     
     # Build a node or relationship from the hash neo4j returns.
     def convert_if_possible(object_hash)
-      if klass = object_hash.is_a?(Hash) && object_hash['data'] && object_hash['data']['architect4r_type']
-        data = begin
-          eval("#{klass}.send(:build_from_database, object_hash)")
-        rescue => ex
-          data
+      if klass = object_hash.is_a?(Hash) && object_hash['data']
+        if model_string = object_hash['data']['architect4r_type']
+          data = begin
+            eval("#{model_string}.send(:build_from_database, object_hash)")
+          rescue => ex
+            data
+          end
+        elsif object_hash['self'].match(/node\/\d+$/i)
+          data = GenericNode.send(:build_from_database, object_hash)
         end
       end
       data

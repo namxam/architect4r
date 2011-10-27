@@ -40,7 +40,7 @@ describe "Model Node" do
       Person.create(:name => 'Morpheus', :human => true)
       m_root = Person.model_root
       Person.create(:name => 'Trinity', :human => true)
-      Person.model_root.should == m_root
+      Person.model_root.id.should == m_root.id
     end
     
   end

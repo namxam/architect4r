@@ -67,4 +67,26 @@ describe Architect4r::Server do
     
   end
   
+  describe "custom cypher queries" do
+    
+    it "should return all native objects from queries" do
+      neo = Person.create(:name => 'Neo', :human => true)
+      niobe = Person.create(:name => 'Niobe', :human => true)
+      logos = Ship.create(:name => 'Logos', :crew_size => 2)
+      
+      CrewMembership.create(logos, niobe, { :rank => 'Captain' })
+      CrewMembership.create(logos, neo, { :rank => 'Member' })
+      
+      result = subject.cypher_query("start s=node(#{logos.id}) match s-[membership:CrewMembership]->person return membership, person")
+      result.should be_a(Array)
+      
+      result[0]['membership'].should be_a(CrewMembership)
+      result[0]['person'].should be_a(Person)
+      
+      result[1]['membership'].should be_a(CrewMembership)
+      result[1]['person'].should be_a(Person)
+    end
+    
+  end
+  
 end

@@ -58,20 +58,6 @@ describe "Node Queries" do
       results.first.should be_a(Person)
     end
     
-    it "should return all native objects from queries" do
-      neo = Person.create(:name => 'Neo', :human => true)
-      niobe = Person.create(:name => 'Niobe', :human => true)
-      logos = Ship.create(:name => 'Logos', :crew_size => 2)
-      
-      CrewMembership.new(logos, niobe, { :rank => 'Captain' })
-      CrewMembership.new(logos, neo, { :rank => 'Member' })
-      
-      #results = Person.find_by_cypher("start s=node(#{logos.id}) match s-[r:model_type]->d return r,d", ['r', 'd'])
-      #puts ">>> #{results.inspect}"
-      pending
-      
-    end
-    
   end
   
 end
