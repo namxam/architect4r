@@ -1,5 +1,9 @@
 # Release Notes
 
+## v0.3.4.1
+
+* Make source and destination of relationships accessible
+
 ## v0.3.4
 
 * Allow fetching items, such as nodes and relationships in one query
