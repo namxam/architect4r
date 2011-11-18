@@ -100,6 +100,45 @@ module Architect4r
         end
       end
       
+      
+      def source
+        @source ||= begin
+          if raw_data && raw_data['start']
+            start_node_id = connection.node_id(raw_data['start'])
+            if result = connection.cypher_query("start n=node(#{start_node_id}) return n")
+              result.first['n']
+            end
+          end
+        end
+      end
+      
+      def destination
+        @destination ||= begin
+          if raw_data && raw_data['end']
+            start_node_id = connection.node_id(raw_data['end'])
+            if result = connection.cypher_query("start n=node(#{start_node_id}) return n")
+              result.first['n']
+            end
+          end
+        end
+      end
+      
+      
+      #
+      # Class methods
+      #
+      
+      
+      def self.find(id)
+        data = connection.execute_cypher("start r=relationship(#{id}) return r")
+        data &&= data['data'] && data['data'].flatten.first
+        self.build_from_database(data)
+      end
+      
+      def self.find!(id)
+        self.find(id) || raise(Architect4r::RecordNotFound.new("Could not find the #{self.name} with id #{id}!"))
+      end
+      
     end
   end
 end

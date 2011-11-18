@@ -67,6 +67,10 @@ module Architect4r
         def root
           get_node(get('/')['reference_node'])
         end
+        
+        def node_id(input)
+          node_url(input).match(/node\/(\d+)$/i)[1].to_i
+        end
       end
     end
   end

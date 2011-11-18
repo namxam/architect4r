@@ -60,4 +60,36 @@ describe Architect4r::Model::Relationship do
     
   end
   
+  describe "Retrieve records from the store" do
+    
+    it "should allow fetching a record by its id" do
+      CrewMembership.should respond_to(:find)
+    end
+    
+    it "should instantiate a relationship model" do
+      ms = CrewMembership.create(ship, person, { :rank => 'Captain' })
+      CrewMembership.find(ms.id).should be_a(CrewMembership)
+    end
+    
+  end
+  
+  describe "Should populate source and destination after retrieval from storage" do
+    
+    let(:membership) { CrewMembership.create(ship, person, { :rank => 'Captain' }) }
+    
+    subject { CrewMembership.find(membership.id) }
+    
+    it { should respond_to(:source) }
+    it { should respond_to(:destination) }
+    
+    it "should populate the source after retrieval" do
+      subject.source.id.should == ship.id
+    end
+    
+    it "should populate the destination after retrieval" do
+      subject.destination.id.should == person.id
+    end
+    
+  end
+  
 end
