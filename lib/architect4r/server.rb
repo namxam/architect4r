@@ -71,6 +71,8 @@ module Architect4r
         elsif object_hash['self'].match(/node\/\d+$/i)
           data = GenericNode.send(:build_from_database, object_hash)
         end
+      else
+        data = object_hash
       end
       data
     end

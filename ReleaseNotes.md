@@ -1,5 +1,9 @@
 # Release Notes
 
+## v0.3.4.2
+
+* Small bugfix, so the cypher_query() metod does not swallow unknown return data
+
 ## v0.3.4.1
 
 * Make source and destination of relationships accessible
