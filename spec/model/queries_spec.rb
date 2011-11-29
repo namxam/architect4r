@@ -10,7 +10,7 @@ describe "Node Queries" do
     
     it "should find a node based on its id" do
       person = Person.create(:name => 'Agent Smith', :human => false)
-      person.persisted?.should be_true
+      person.should be_persisted
       
       record = Person.find_by_id(person.id)
       record.should be_a(Person)
@@ -26,7 +26,7 @@ describe "Node Queries" do
       Person.find_by_id(-1).should be_nil
     end
     
-    it "should raise an exception when banged finder is used an no record found" do
+    it "should raise an exception when banged finder is used and no record found" do
       lambda { Person.find_by_id!(-1) }.should raise_error(Architect4r::RecordNotFound)
     end
     
