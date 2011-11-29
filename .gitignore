@@ -3,3 +3,4 @@
 architect4r-*.gem
 neo4j_server
 Gemfile.lock
+*.swp
