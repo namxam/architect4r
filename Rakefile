@@ -5,7 +5,7 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new('spec')
 
 # Load instance manager
-require 'lib/architect4r/instance_manager'
+require './lib/architect4r/instance_manager'
 
 # Setting up default tasks
 desc "Run specs"
