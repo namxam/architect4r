@@ -1,4 +1,7 @@
 .DS_Store
 .rvmrc
-architect4r-*.gem
+architect4r*.gem
 neo4j_server
+Gemfile.lock
+neo4j_server/
+*.swp

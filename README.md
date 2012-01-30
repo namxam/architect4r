@@ -67,6 +67,20 @@ Quick Start
     # Init a class based relationship
     Fanship.new(@user, @instrument, { :reason => 'Because I like you' })
 
+
+Development
+-----------
+
+```bash
+# Clone the repo and cd into it, then:
+bundle install
+bundle exec rake server:install
+bundle exec rspec spec/
+```
+
+You can also use `guard` to run the specs continuously during development: `bundle exec guard`.
+
+
 License
 -------
 
