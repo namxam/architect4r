@@ -34,6 +34,10 @@ module Architect4r
           end
         end
         
+        def all
+          find_by_cypher("start ModelRoot=node(#{self.model_root.id}) match ModelRoot<-[:model_type]-Item return Item", 'Item')
+        end
+        
       end
     end
   end

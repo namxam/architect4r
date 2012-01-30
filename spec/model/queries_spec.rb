@@ -60,4 +60,12 @@ describe "Node Queries" do
     
   end
   
+  describe ".all" do
+    
+    it "should return all records" do
+      Person.all.size.should == Person.count
+    end
+    
+  end
+  
 end
