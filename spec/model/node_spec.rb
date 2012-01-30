@@ -30,6 +30,26 @@ describe "Model Node" do
     
   end
   
+  describe "equality of two instances of the same node" do
+    
+    subject { Person.create(:name => 'Alfons', :human => true) }
+    let(:instance_1) { Person.find_by_id(subject.id) }
+    let(:instance_2) { Person.find_by_id(subject.id) }
+    
+    it "should have the same hash" do
+      instance_1.hash.should equal(instance_2.hash)
+    end
+    
+    it "should be eql" do
+      instance_1.should eql(instance_2)
+    end
+    
+    it "should be ==" do
+      instance_1.should == instance_2
+    end
+    
+  end
+  
   describe "connection" do
     
     it { should respond_to(:connection) }

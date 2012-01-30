@@ -51,10 +51,25 @@ module Architect4r
         end
       end
       
+      # Override to_s to make debugging easier. It now includes the id and properties
+      #
       def to_s
         prop_data = @properties_data.collect { |key, value| "#{key}='#{value}'" }.join(' ')
         "#<#{self.class.name}:#{object_id} id=#{id} #{prop_data} neo4j_uri='#{@raw_data['self']}'>"
       end
+      
+      # Calculate hash manually in order to only include unique properties for comparison
+      #
+      def hash
+        [self.class, self.id].hash
+      end
+      
+      # Override comparison of instances
+      #
+      def ==(other)
+        other.is_a?(self.class) && id.present? && other.id == id
+      end
+      alias :eql? :==
       
       # Create the document. Validation is enabled by default and will return
       # false if the document is not valid. If all goes well, the document will
