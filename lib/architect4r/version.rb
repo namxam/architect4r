@@ -1,3 +1,3 @@
 module Architect4r
-  VERSION = "0.3.4.2"
+  VERSION = "0.4"
 end

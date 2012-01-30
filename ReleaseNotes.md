@@ -1,5 +1,19 @@
 # Release Notes
 
+## v0.4
+
+* Upgrade to neo4j 1.6 GA
+
+  This breaks compatibility with older versions of the app, as the cypher rest interface
+  has been moved to a different url.
+
+* Add Node#all
+  
+  For quick inspection, added an instance method which retrieves all model records. Please 
+  do not use this in production!
+
+* Override Node#to_s to include the node id, properties and neo4j API url.
+
 ## v0.3.4.2
 
 * Small bugfix, so the cypher_query() metod does not swallow unknown return data
