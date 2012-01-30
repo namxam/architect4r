@@ -51,6 +51,11 @@ module Architect4r
         end
       end
       
+      def to_s
+        prop_data = @properties_data.collect { |key, value| "#{key}='#{value}'" }.join(' ')
+        "#<#{self.class.name}:#{object_id} id=#{id} #{prop_data} neo4j_uri='#{@raw_data['self']}'>"
+      end
+      
       # Create the document. Validation is enabled by default and will return
       # false if the document is not valid. If all goes well, the document will
       # be returned.

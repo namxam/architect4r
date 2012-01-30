@@ -21,6 +21,15 @@ describe "Model Node" do
     end
   end
   
+  describe "#to_s" do
+    
+    it "should provide a more readable representation of the object" do
+      person = Person.create(:name => 'Morpheus', :human => true)
+      person.to_s.should == "#<Person:#{person.object_id} id=#{person.id} name='Morpheus' created_at='#{person.created_at}' human='true' updated_at='#{person.updated_at}' neo4j_uri='#{TEST_SERVER.node_url(person.id)}'>"
+    end
+    
+  end
+  
   describe "connection" do
     
     it { should respond_to(:connection) }
