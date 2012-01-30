@@ -8,22 +8,21 @@ module Architect4r
         def execute_cypher(query)
           query = self.interpolate_node_model_root_references(query)
           
-          url = prepend_base_url("/ext/CypherPlugin/graphdb/execute_query")
+          url = prepend_base_url("/cypher")
           response = Typhoeus::Request.post(url, 
             :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
             :body => { 'query' => query }.to_json)
           
           # Check if there might be an error with the query
           if response.code == 400
-            raise Architect4r::InvalidCypherQuery.new(query)
-          elsif response.code == 500
             msg = JSON.parse(response.body)
-            
             if msg['exception'].to_s.match /org.neo4j.graphdb.NotFoundException/
               nil
             else
               raise Architect4r::InvalidCypherQuery.new(query)
             end
+          elsif response.code == 500
+            raise Architect4r::InvalidCypherQuery.new(query)
           elsif response.code == 204
             nil
           else

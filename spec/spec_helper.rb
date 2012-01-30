@@ -9,7 +9,7 @@ unless defined?(TEST_SERVER)
     :environment => :test,
     :config => {
       :host => 'localhost', 
-      :port => '7475', 
+      :port => '7474', 
       :path => '', 
       :log_level => 'OFF'
     }
@@ -23,7 +23,7 @@ RSpec.configure do |config|
   neo_manager = Architect4r::InstanceManager.new(File.join(File.dirname(__FILE__), '../neo4j_server'))
   
   config.before(:suite) do
-    neo_manager.reset_to_sample_data(File.join(File.dirname(__FILE__), "fixtures/graph.db.default/"))
+    neo_manager.reset
     neo_manager.start
   end
   

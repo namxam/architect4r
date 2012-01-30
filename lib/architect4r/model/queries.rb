@@ -14,6 +14,8 @@ module Architect4r
           data['data'].flatten.first
         end
         
+        # Fetch a record of the specified model based on its id
+        #
         def find_by_id(id)
           data = connection.execute_cypher("start s=node(#{self.model_root.id}), d=node(#{id.to_i}) match s<-[r:model_type]-d return d")
           data &&= data['data'] && data['data'].flatten.first
