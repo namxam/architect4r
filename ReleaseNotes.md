@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.4.1
+
+* Allow logging of cypher queries for easier debugging
+
+* Add proper node comparison, so we can detect multiple instances of the same node.
+
 ## v0.4
 
 * Upgrade to neo4j 1.6 GA
