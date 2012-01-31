@@ -8,14 +8,19 @@ module Architect4r
         def execute_cypher(query)
           query = self.interpolate_node_model_root_references(query)
           
+          Architect4r.logger.debug("[Architect4r][execute_cypher] QUERY: #{query}")
+          
           url = prepend_base_url("/cypher")
           response = Typhoeus::Request.post(url, 
             :headers => { 'Accept' => 'application/json', 'Content-Type' => 'application/json' },
             :body => { 'query' => query }.to_json)
           
+          msg = JSON.parse(response.body)
+          
+          Architect4r.logger.debug("[Architect4r][execute_cypher] CODE: #{response.code} => #{msg.inspect}")
+          
           # Check if there might be an error with the query
           if response.code == 400
-            msg = JSON.parse(response.body)
             if msg['exception'].to_s.match /org.neo4j.graphdb.NotFoundException/
               nil
             else
@@ -26,13 +31,15 @@ module Architect4r
           elsif response.code == 204
             nil
           else
-            JSON.parse(response.body)
+            msg
           end
         end
         
         def cypher_query(query, transform=true)
           # Get data from server
           data = execute_cypher(query)
+          
+          Architect4r.logger.debug("[Architect4r][cypher_query] #{data.inspect}")
           
           # Create native ruby objects
           data['data'].map! do |set|

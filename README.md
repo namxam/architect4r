@@ -68,6 +68,22 @@ Quick Start
     Fanship.new(@user, @instrument, { :reason => 'Because I like you' })
 
 
+Logging
+-------
+
+In order to log the debug output from architect4r to a logfile, just override the default 
+logger instance. If you are using rails, you might wanna add this to an initializer:
+
+    
+    # Create a logger instance
+    file = File.open('log/output.log', File::WRONLY | File::APPEND)
+    logger = Logger.new(file, 'daily')
+    logger.level = Logger::DEBUG
+    
+    # Set architect4r logger
+    Architect4r.logger = logger
+
+
 Development
 -----------
 

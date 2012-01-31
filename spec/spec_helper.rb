@@ -10,8 +10,7 @@ unless defined?(TEST_SERVER)
     :config => {
       :host => 'localhost', 
       :port => '7474', 
-      :path => '', 
-      :log_level => 'OFF'
+      :path => ''
     }
   }
   

@@ -4,6 +4,11 @@
 require 'architect4r/version'
 
 #
+# External libraries
+#
+require 'logger'
+
+#
 # Extensions
 #
 require 'active_model'
@@ -56,6 +61,14 @@ end
 # The namespace
 #
 module Architect4r
+  
+  def self.logger
+    @log ||= Logger.new(STDOUT)
+  end
+  
+  def self.logger=(logger_instance)
+    @log = logger_instance
+  end
   
   def self.version
     "Architect4r version #{Architect4r::VERSION}"
