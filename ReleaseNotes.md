@@ -1,5 +1,12 @@
 # Release Notes
 
+## v0.4.2
+
+* Unify the finder interface and use ```Node#find(id)``` in favor of ```Node#find_by_id(id)```
+
+  Now nodes and relationships are using the same interface. Moreover, architect4r should be 
+  more compatible with other gems (search, …).
+
 ## v0.4.1
 
 * Allow logging of cypher queries for easier debugging
