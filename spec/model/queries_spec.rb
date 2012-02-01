@@ -7,6 +7,7 @@ describe "Node Queries" do
   describe "fetching a node" do
     
     it { should respond_to(:find_by_id) }
+    it { should respond_to(:find) }
     
     it "should find a node based on its id" do
       person = Person.create(:name => 'Agent Smith', :human => false)

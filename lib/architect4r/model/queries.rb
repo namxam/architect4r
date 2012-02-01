@@ -16,15 +16,17 @@ module Architect4r
         
         # Fetch a record of the specified model based on its id
         #
-        def find_by_id(id)
+        def find(id)
           data = connection.execute_cypher("start s=node(#{self.model_root.id}), d=node(#{id.to_i}) match s<-[r:model_type]-d return d")
           data &&= data['data'] && data['data'].flatten.first
           self.build_from_database(data)
         end
+        alias :find_by_id :find
         
-        def find_by_id!(id)
+        def find!(id)
           self.find_by_id(id) || raise(Architect4r::RecordNotFound.new("Could not find the #{self.name} with id #{id}!"))
         end
+        alias :find_by_id! :find!
         
         # Use this method only to fetch items of the same class.
         def find_by_cypher(query, identifier)
