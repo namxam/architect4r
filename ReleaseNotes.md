@@ -1,5 +1,9 @@
 # Release Notes
 
+## v0.4.3
+
+* Allow retrieving multiple nodes with a single call to ```Node#find(id, id2, id3)```
+
 ## v0.4.2
 
 * Unify the finder interface and use ```Node#find(id)``` in favor of ```Node#find_by_id(id)```
