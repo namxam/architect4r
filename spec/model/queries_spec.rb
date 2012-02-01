@@ -36,6 +36,21 @@ describe "Node Queries" do
       lambda { Person.find_by_id!(person.id) }.should_not raise_error(Architect4r::RecordNotFound)
     end
     
+    it "should allow fetching multiple nodes by id" do
+      person1 = Person.create(:name => 'Agent 1', :human => false)
+      person2 = Person.create(:name => 'Agent 2', :human => false)
+      
+      result = Person.find(person1.id, person2.id)
+      result.should have(2).persons
+    end
+    
+    it "should return an array if the input was one" do
+      person = Person.create(:name => 'Agent X', :human => false)
+      
+      result = Person.find([person.id])
+      result.should have(1).persons
+    end
+    
   end
   
   describe "counting records" do
