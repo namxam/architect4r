@@ -1,5 +1,10 @@
 # Release Notes
 
+## v0.4.3.1
+
+* Update ActiveSupport::Concern usage by removing InstanceMethods modules
+
+
 ## v0.4.3
 
 * Allow retrieving multiple nodes with a single call to ```Node#find(id, id2, id3)```
