@@ -3,10 +3,6 @@ module Architect4r
     module Queries
       extend ActiveSupport::Concern
       
-      module InstanceMethods
-        
-      end
-      
       module ClassMethods
         
         def count(opts = {}, &block)

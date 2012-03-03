@@ -3,12 +3,8 @@ module Architect4r
     module Relationships
       extend ActiveSupport::Concern
       
-      module InstanceMethods
-        
-        def links
-          @links_query_interface = LinksQueryInterface.new(self)
-        end
-        
+      def links
+        @links_query_interface = LinksQueryInterface.new(self)
       end
       
     end

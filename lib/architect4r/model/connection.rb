@@ -3,12 +3,8 @@ module Architect4r
     module Connection
       extend ActiveSupport::Concern
       
-      module InstanceMethods
-      
-        def connection
-          self.class.connection
-        end
-        
+      def connection
+        self.class.connection
       end
       
       module ClassMethods

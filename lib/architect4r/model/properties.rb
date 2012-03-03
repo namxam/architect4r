@@ -1,7 +1,5 @@
 module Architect4r
-  
   module Model
-    
     module Properties
       extend ActiveSupport::Concern
       
@@ -10,78 +8,74 @@ module Architect4r
         self.properties ||= {}
       end
       
-      module InstanceMethods
-        def parse_properties(properties = {})
-          @properties_data = {}
-          update_attributes_without_saving(properties)
-        end
-        
-        # Return a hash of all properties which can be transformed into json
-        # Remove all nil values, as those cannot be stored in the graph
-        def _to_database_hash
-          @properties_data.merge('architect4r_type' => self.class.name).
-                           reject { |key, value| value.nil? }
-        end
-
-        # Read the casted value of an attribute defined with a property.
-        #
-        # ==== Returns
-        # Object:: the casted attibutes value.
-        def read_attribute(property, locale = nil)
-          property = "#{property}_#{locale}" if locale
-          @properties_data[property.to_s]
-        end
-
-        # Store a casted value in the current instance of an attribute defined
-        # with a property and update dirty status
-        def write_attribute(property, value, locale = nil)
-          # retrieve options for the attribute
-          opts = self.class.properties[property.to_s]
-          
-          # Check if we should store a localized version of the data
-          property = "#{property}_#{locale}" if locale
-          
-          # TODO: Mark dirty attribute tracking
-          
-          # Cast the value before storing it
-          cast_to = opts && opts[:cast_to] || Object
-          
-          @properties_data[property.to_s] = if value.nil?
-            nil
-          elsif cast_to == String
-            value.to_s
-          elsif cast_to == Integer
-            value.to_i
-          elsif cast_to == Float
-            value.to_f
-          elsif cast_to == DateTime
-            value.to_datetime
-          elsif cast_to == TrueClass or cast_to == FalseClass
-            if value.kind_of?(Integer)
-              value == 1
-            else
-              %w[ true 1 t ].include?(value.to_s.downcase)
-            end
-          else
-            value
-          end
-        end
-        
-        def update_attributes_without_saving(hash)
-          return if hash.nil?
-          hash.each do |key, value|
-            if self.respond_to?("#{key}=")
-              self.send("#{key}=", value)
-            else
-              @properties_data[key] = value
-            end
-          end
-        end
-        alias :attributes= :update_attributes_without_saving
-        
-        
+      def parse_properties(properties = {})
+        @properties_data = {}
+        update_attributes_without_saving(properties)
       end
       
+      # Return a hash of all properties which can be transformed into json
+      # Remove all nil values, as those cannot be stored in the graph
+      def _to_database_hash
+        @properties_data.merge('architect4r_type' => self.class.name).
+                         reject { |key, value| value.nil? }
+      end
+
+      # Read the casted value of an attribute defined with a property.
+      #
+      # ==== Returns
+      # Object:: the casted attibutes value.
+      def read_attribute(property, locale = nil)
+        property = "#{property}_#{locale}" if locale
+        @properties_data[property.to_s]
+      end
+
+      # Store a casted value in the current instance of an attribute defined
+      # with a property and update dirty status
+      def write_attribute(property, value, locale = nil)
+        # retrieve options for the attribute
+        opts = self.class.properties[property.to_s]
+        
+        # Check if we should store a localized version of the data
+        property = "#{property}_#{locale}" if locale
+        
+        # TODO: Mark dirty attribute tracking
+        
+        # Cast the value before storing it
+        cast_to = opts && opts[:cast_to] || Object
+        
+        @properties_data[property.to_s] = if value.nil?
+          nil
+        elsif cast_to == String
+          value.to_s
+        elsif cast_to == Integer
+          value.to_i
+        elsif cast_to == Float
+          value.to_f
+        elsif cast_to == DateTime
+          value.to_datetime
+        elsif cast_to == TrueClass or cast_to == FalseClass
+          if value.kind_of?(Integer)
+            value == 1
+          else
+            %w[ true 1 t ].include?(value.to_s.downcase)
+          end
+        else
+          value
+        end
+      end
+      
+      def update_attributes_without_saving(hash)
+        return if hash.nil?
+        hash.each do |key, value|
+          if self.respond_to?("#{key}=")
+            self.send("#{key}=", value)
+          else
+            @properties_data[key] = value
+          end
+        end
+      end
+      alias :attributes= :update_attributes_without_saving
+    
       module ClassMethods
         
         # Allow setting properties
@@ -163,9 +157,6 @@ module Architect4r
         end
         
       end
-      
     end
-    
   end
-  
 end
